@@ -10,16 +10,19 @@ root.title("Calculadora")
 
 root.geometry("+800+80") #con esto establecemos dónde aparecera la ventana de la aplicación
 
-mainframe = ttk.Frame(root)
+styles = ttk.Style()
+styles.configure('mainframe.TFrame', background ="#DBDBDB")
+
+mainframe = ttk.Frame(root, style="mainframe.TFrame")
 mainframe.grid(column=0, row=0)
 
 entry1 = StringVar()
 label_entry1 = ttk.Label(mainframe, textvariable = entry1)
-label_entry1.grid(column=0, row=0)
+label_entry1.grid(column=0, row=0, columnspan= 4, sticky= (W, E))
 
 entry2 = StringVar()
 label_entry2 = ttk.Label(mainframe, textvariable = entry2)
-label_entry2.grid(column=0, row=1)
+label_entry2.grid(column=0, row=1, columnspan= 4, sticky= (W, E))
 
 #Se empieza a crear cada uno de los botones para la calculdora
 buttonClear_Entry = ttk.Button(mainframe, text = "CE")
