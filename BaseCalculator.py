@@ -5,6 +5,10 @@ from tkinter import *
 from tkinter import ttk
 import math
 
+def button_click(value):
+    current_text = entry1.get()  # Obtiene el texto actual
+    entry1.set(current_text + value)  # Añade el nuevo valor al final
+    
 root = Tk()
 root.title("Calculadora")
 
@@ -45,16 +49,16 @@ tan_button = ttk.Button(mainframe, text = "tan")
 point_button = ttk.Button(mainframe, text = ".")
 percentage_button = ttk.Button(mainframe, text ="%")
 
-button_0= ttk.Button(mainframe, text = "0")
-button_1= ttk.Button(mainframe, text = "1")
-button_2= ttk.Button(mainframe, text = "2")
-button_3= ttk.Button(mainframe, text = "3")
-button_4= ttk.Button(mainframe, text = "4")
-button_5= ttk.Button(mainframe, text = "5")
-button_6= ttk.Button(mainframe, text = "6")
-button_7= ttk.Button(mainframe, text = "7")
-button_8= ttk.Button(mainframe, text = "8")
-button_9= ttk.Button(mainframe, text = "9")
+button_0= ttk.Button(mainframe, text = "0", command=lambda: button_click("0"))
+button_1= ttk.Button(mainframe, text = "1", command=lambda: button_click("1"))
+button_2= ttk.Button(mainframe, text = "2", command=lambda: button_click("2"))
+button_3= ttk.Button(mainframe, text = "3", command=lambda: button_click("3"))
+button_4= ttk.Button(mainframe, text = "4", command=lambda: button_click("4"))
+button_5= ttk.Button(mainframe, text = "5", command=lambda: button_click("5"))
+button_6= ttk.Button(mainframe, text = "6", command=lambda: button_click("6"))
+button_7= ttk.Button(mainframe, text = "7", command=lambda: button_click("7"))
+button_8= ttk.Button(mainframe, text = "8", command=lambda: button_click("8"))
+button_9= ttk.Button(mainframe, text = "9", command=lambda: button_click("9"))
 
 #aquí ordenamos los botones dentro del Frame
 #Primera fila de botones
@@ -93,7 +97,9 @@ button_0.grid(column = 1, row = 7)
 point_button.grid(column = 2, row = 7)
 buttonEqual.grid(column = 3, row = 7)
 
+
 #fila extra
 expon_button.grid(column = 0, row = 8)
 squareroot_button.grid(column = 1, row = 8)
+
 root, mainloop()
