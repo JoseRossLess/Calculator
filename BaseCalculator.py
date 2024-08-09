@@ -6,8 +6,12 @@ from tkinter import ttk
 import math
 
 def button_click(value):
-    current_text = entry1.get()  # Obtiene el texto actual
-    entry1.set(current_text + value)  # Añade el nuevo valor al final
+    current_text = entry1.get()
+    # Si el texto actual es "0", reemplázalo con el nuevo valor
+    if current_text == "0":
+        entry1.set(value)
+    else:
+        entry1.set(current_text + value)
     
 root = Tk()
 root.title("Calculadora")
@@ -21,7 +25,8 @@ mainframe = ttk.Frame(root, style="mainframe.TFrame")
 mainframe.grid(column=0, row=0)
 
 entry1 = StringVar()
-label_entry1 = ttk.Label(mainframe, textvariable = entry1)
+entry1.set("0")
+label_entry1 = ttk.Label(mainframe, textvariable = entry1, anchor='e', font=("Arial", 24))
 label_entry1.grid(column=0, row=0, columnspan= 4, sticky= (W, E))
 
 entry2 = StringVar()
