@@ -41,6 +41,9 @@ entry2 = StringVar()
 label_entry2 = ttk.Label(mainframe, textvariable = entry2)
 label_entry2.grid(column=0, row=1, columnspan= 4, sticky= (N, S, W, E))
 
+button_font = ("Arial", 22)
+
+#region Botones de borrado y Operaciones
 #Se empieza a crear cada uno de los botones para la calculdora
 buttonClear_Entry = ttk.Button(mainframe, text = "CE")
 buttonClear_All = ttk.Button(mainframe, text = "C")
@@ -62,6 +65,9 @@ tan_button = ttk.Button(mainframe, text = "tan")
 point_button = ttk.Button(mainframe, text = ".")
 percentage_button = ttk.Button(mainframe, text ="%")
 
+#endregion
+
+#region Botones Númericos
 button_0= ttk.Button(mainframe, text = "0", command=lambda: button_click("0"))
 button_1= ttk.Button(mainframe, text = "1", command=lambda: button_click("1"))
 button_2= ttk.Button(mainframe, text = "2", command=lambda: button_click("2"))
@@ -72,7 +78,9 @@ button_6= ttk.Button(mainframe, text = "6", command=lambda: button_click("6"))
 button_7= ttk.Button(mainframe, text = "7", command=lambda: button_click("7"))
 button_8= ttk.Button(mainframe, text = "8", command=lambda: button_click("8"))
 button_9= ttk.Button(mainframe, text = "9", command=lambda: button_click("9"))
+#endregion
 
+#region Ubicacion de Botones y Ajuste al Mainframe
 #aquí ordenamos los botones dentro del Frame
 #Primera fila de botones
 fraction_button.grid(column = 0, row = 2, sticky = (N, S, E, W))
@@ -114,5 +122,7 @@ buttonEqual.grid(column = 3, row = 7, sticky = (N, S, E, W))
 #fila extra
 expon_button.grid(column = 0, row = 8, sticky = (N, S, E, W))
 squareroot_button.grid(column = 1, row = 8, sticky = (N, S, E, W))
+
+#endregion
 
 root, mainloop()
