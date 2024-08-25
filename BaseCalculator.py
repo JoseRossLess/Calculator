@@ -22,16 +22,24 @@ styles = ttk.Style()
 styles.configure('mainframe.TFrame', background ="#DBDBDB")
 
 mainframe = ttk.Frame(root, style="mainframe.TFrame")
-mainframe.grid(column=0, row=0)
+mainframe.grid(column=0, row=0, sticky = (N, S, E, W))
+
+root.columnconfigure(0, weight = 1)
+root.rowconfigure(0, weight = 1)
+
+for i in range(4):
+    mainframe.columnconfigure(i, weight = 1)
+for i in range (9):
+    mainframe.rowconfigure(i, weight = 1)
 
 entry1 = StringVar()
 entry1.set("0")
 label_entry1 = ttk.Label(mainframe, textvariable = entry1, anchor='e', font=("Arial", 24))
-label_entry1.grid(column=0, row=0, columnspan= 4, sticky= (W, E))
+label_entry1.grid(column=0, row=0, columnspan= 4, sticky= (N, S, W, E))
 
 entry2 = StringVar()
 label_entry2 = ttk.Label(mainframe, textvariable = entry2)
-label_entry2.grid(column=0, row=1, columnspan= 4, sticky= (W, E))
+label_entry2.grid(column=0, row=1, columnspan= 4, sticky= (N, S, W, E))
 
 #Se empieza a crear cada uno de los botones para la calculdora
 buttonClear_Entry = ttk.Button(mainframe, text = "CE")
@@ -67,44 +75,44 @@ button_9= ttk.Button(mainframe, text = "9", command=lambda: button_click("9"))
 
 #aquí ordenamos los botones dentro del Frame
 #Primera fila de botones
-fraction_button.grid(column = 0, row = 2)
-buttonClear_All.grid(column = 1, row = 2)
-buttonClear_Entry.grid(column = 2, row = 2)
-buttonErase.grid(column = 3, row = 2)
+fraction_button.grid(column = 0, row = 2, sticky = (N, S, E, W))
+buttonClear_All.grid(column = 1, row = 2, sticky = (N, S, E, W))
+buttonClear_Entry.grid(column = 2, row = 2, sticky = (N, S, E, W))
+buttonErase.grid(column = 3, row = 2, sticky = (N, S, E, W))
 
 #segunda fila de botones
-sin_button.grid(column = 0, row = 3)
-cos_button.grid(column = 1, row =3)
-tan_button.grid(column = 2, row =3)
-division_button.grid(column = 3, row =3)
+sin_button.grid(column = 0, row = 3, sticky = (N, S, E, W))
+cos_button.grid(column = 1, row =3, sticky = (N, S, E, W))
+tan_button.grid(column = 2, row =3, sticky = (N, S, E, W))
+division_button.grid(column = 3, row =3, sticky = (N, S, E, W))
 
 #tercera fila de botones
-button_7.grid(column = 0, row = 4)
-button_8.grid(column = 1, row = 4)
-button_9.grid(column = 2, row = 4)
-multiplication_button.grid(column = 3, row = 4)
+button_7.grid(column = 0, row = 4, sticky = (N, S, E, W))
+button_8.grid(column = 1, row = 4, sticky = (N, S, E, W))
+button_9.grid(column = 2, row = 4, sticky = (N, S, E, W))
+multiplication_button.grid(column = 3, row = 4, sticky = (N, S, E, W))
 
 #cuarta fila de botones
-button_4.grid(column = 0, row = 5)
-button_5.grid(column = 1, row = 5)
-button_6.grid(column = 2, row = 5)
-subtract_button.grid(column = 3, row = 5)
+button_4.grid(column = 0, row = 5, sticky = (N, S, E, W))
+button_5.grid(column = 1, row = 5, sticky = (N, S, E, W))
+button_6.grid(column = 2, row = 5, sticky = (N, S, E, W))
+subtract_button.grid(column = 3, row = 5, sticky = (N, S, E, W))
 
 #quinta fial de botones
-button_1.grid(column = 0, row = 6)
-button_2.grid(column = 1, row = 6)
-button_3.grid(column = 2, row = 6)
-add_button.grid(column = 3, row = 6)
+button_1.grid(column = 0, row = 6, sticky = (N, S, E, W))
+button_2.grid(column = 1, row = 6, sticky = (N, S, E, W))
+button_3.grid(column = 2, row = 6, sticky = (N, S, E, W))
+add_button.grid(column = 3, row = 6, sticky = (N, S, E, W))
 
 #sexta fila
-percentage_button.grid(column = 0, row = 7)
-button_0.grid(column = 1, row = 7)
-point_button.grid(column = 2, row = 7)
-buttonEqual.grid(column = 3, row = 7)
+percentage_button.grid(column = 0, row = 7, sticky = (N, S, E, W))
+button_0.grid(column = 1, row = 7, sticky = (N, S, E, W))
+point_button.grid(column = 2, row = 7, sticky = (N, S, E, W))
+buttonEqual.grid(column = 3, row = 7, sticky = (N, S, E, W))
 
 
 #fila extra
-expon_button.grid(column = 0, row = 8)
-squareroot_button.grid(column = 1, row = 8)
+expon_button.grid(column = 0, row = 8, sticky = (N, S, E, W))
+squareroot_button.grid(column = 1, row = 8, sticky = (N, S, E, W))
 
 root, mainloop()
