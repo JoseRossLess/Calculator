@@ -18,6 +18,9 @@ root.title("Calculadora")
 
 root.geometry("+800+80") #con esto establecemos dónde aparecera la ventana de la aplicación
 
+style = ttk.Style()
+style.configure("Custom.TButton", font = ("Arial",18))
+
 styles = ttk.Style()
 styles.configure('mainframe.TFrame', background ="#DBDBDB")
 
@@ -41,43 +44,41 @@ entry2 = StringVar()
 label_entry2 = ttk.Label(mainframe, textvariable = entry2)
 label_entry2.grid(column=0, row=1, columnspan= 4, sticky= (N, S, W, E))
 
-button_font = ("Arial", 22)
-
 #region Botones de borrado y Operaciones
 #Se empieza a crear cada uno de los botones para la calculdora
-buttonClear_Entry = ttk.Button(mainframe, text = "CE")
-buttonClear_All = ttk.Button(mainframe, text = "C")
-buttonErase = ttk.Button(mainframe, text = "←")
-buttonEqual = ttk.Button(mainframe, text = "=")
+buttonClear_Entry = ttk.Button(mainframe, text = "CE", style = "Custom.TButton")
+buttonClear_All = ttk.Button(mainframe, text = "C", style = "Custom.TButton")
+buttonErase = ttk.Button(mainframe, text = "←", style = "Custom.TButton")
+buttonEqual = ttk.Button(mainframe, text = "=", style = "Custom.TButton")
 
-division_button = ttk.Button(mainframe, text = "÷")
-multiplication_button = ttk.Button(mainframe, text = "x")
-add_button = ttk.Button(mainframe, text = "+")
-subtract_button = ttk.Button(mainframe, text = "-")
-squareroot_button = ttk.Button(mainframe, text = "√")
-expon_button = ttk.Button(mainframe, text = "x²")
-fraction_button = ttk.Button(mainframe, text = "a⅓")
+division_button = ttk.Button(mainframe, text = "÷", command=lambda: button_click("÷"), style = "Custom.TButton")
+multiplication_button = ttk.Button(mainframe, text = "x", command=lambda: button_click("x"), style = "Custom.TButton")
+add_button = ttk.Button(mainframe, text = "+", command=lambda: button_click("+"), style = "Custom.TButton")
+subtract_button = ttk.Button(mainframe, text = "-", command=lambda: button_click("-"), style = "Custom.TButton")
+squareroot_button = ttk.Button(mainframe, text = "√", command=lambda: button_click("√"), style = "Custom.TButton")
+expon_button = ttk.Button(mainframe, text = "x²", command=lambda: button_click("x²"), style = "Custom.TButton")
+fraction_button = ttk.Button(mainframe, text = "a⅓", command=lambda: button_click("/"), style = "Custom.TButton")
 
-sin_button = ttk.Button(mainframe, text = "sin")
-cos_button = ttk.Button(mainframe, text = "cos")
-tan_button = ttk.Button(mainframe, text = "tan")
+sin_button = ttk.Button(mainframe, text = "sin", command=lambda: button_click("sin"), style = "Custom.TButton")
+cos_button = ttk.Button(mainframe, text = "cos", command=lambda: button_click("cos"), style = "Custom.TButton")
+tan_button = ttk.Button(mainframe, text = "tan", command=lambda: button_click("tan"), style = "Custom.TButton")
 
-point_button = ttk.Button(mainframe, text = ".")
-percentage_button = ttk.Button(mainframe, text ="%")
+point_button = ttk.Button(mainframe, text = ".", command=lambda: button_click("."), style = "Custom.TButton")
+percentage_button = ttk.Button(mainframe, text ="%", command=lambda: button_click("%"), style = "Custom.TButton")
 
 #endregion
 
 #region Botones Númericos
-button_0= ttk.Button(mainframe, text = "0", command=lambda: button_click("0"))
-button_1= ttk.Button(mainframe, text = "1", command=lambda: button_click("1"))
-button_2= ttk.Button(mainframe, text = "2", command=lambda: button_click("2"))
-button_3= ttk.Button(mainframe, text = "3", command=lambda: button_click("3"))
-button_4= ttk.Button(mainframe, text = "4", command=lambda: button_click("4"))
-button_5= ttk.Button(mainframe, text = "5", command=lambda: button_click("5"))
-button_6= ttk.Button(mainframe, text = "6", command=lambda: button_click("6"))
-button_7= ttk.Button(mainframe, text = "7", command=lambda: button_click("7"))
-button_8= ttk.Button(mainframe, text = "8", command=lambda: button_click("8"))
-button_9= ttk.Button(mainframe, text = "9", command=lambda: button_click("9"))
+button_0= ttk.Button(mainframe, text = "0", command=lambda: button_click("0"), style = "Custom.TButton")
+button_1= ttk.Button(mainframe, text = "1", command=lambda: button_click("1"), style = "Custom.TButton")
+button_2= ttk.Button(mainframe, text = "2", command=lambda: button_click("2"), style = "Custom.TButton")
+button_3= ttk.Button(mainframe, text = "3", command=lambda: button_click("3"), style = "Custom.TButton")
+button_4= ttk.Button(mainframe, text = "4", command=lambda: button_click("4"), style = "Custom.TButton")
+button_5= ttk.Button(mainframe, text = "5", command=lambda: button_click("5"), style = "Custom.TButton")
+button_6= ttk.Button(mainframe, text = "6", command=lambda: button_click("6"), style = "Custom.TButton")
+button_7= ttk.Button(mainframe, text = "7", command=lambda: button_click("7"), style = "Custom.TButton")
+button_8= ttk.Button(mainframe, text = "8", command=lambda: button_click("8"), style = "Custom.TButton")
+button_9= ttk.Button(mainframe, text = "9", command=lambda: button_click("9"), style = "Custom.TButton")
 #endregion
 
 #region Ubicacion de Botones y Ajuste al Mainframe
