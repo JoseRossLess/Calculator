@@ -12,7 +12,30 @@ def button_click(value):
         entry1.set(value)
     else:
         entry1.set(current_text + value)
-    
+        
+def Button_Erase():
+    current_text = entry1.get()
+    if len(current_text) > 0:
+        entry1.set(current_text[:-1])
+        
+def Button_Erase_Entry():
+    current_text = entry1.get()
+    if len(current_text) > 0:
+        entry1.set("0")
+        
+def Erase_All():
+    current_text = entry1.get()
+    if len(current_text) > 0:
+        entry1.set("0")
+    current_text2 = entry2.get()
+    if len(current_text2) > 0:
+        entry2.set(current_text[:0])
+        
+def Equal():
+    current_text = entry1.get()
+    entry2.set(current_text)
+        
+        
 root = Tk()
 root.title("Calculadora")
 
@@ -41,15 +64,16 @@ label_entry1 = ttk.Label(mainframe, textvariable = entry1, anchor='e', font=("Ar
 label_entry1.grid(column=0, row=0, columnspan= 4, sticky= (N, S, W, E))
 
 entry2 = StringVar()
-label_entry2 = ttk.Label(mainframe, textvariable = entry2)
+entry2.set("")
+label_entry2 = ttk.Label(mainframe, textvariable = entry2, anchor='e', font=("Arial", 25))
 label_entry2.grid(column=0, row=1, columnspan= 4, sticky= (N, S, W, E))
 
 #region Botones de borrado y Operaciones
 #Se empieza a crear cada uno de los botones para la calculdora
-buttonClear_Entry = ttk.Button(mainframe, text = "CE", style = "Custom.TButton")
-buttonClear_All = ttk.Button(mainframe, text = "C", style = "Custom.TButton")
-buttonErase = ttk.Button(mainframe, text = "←", style = "Custom.TButton")
-buttonEqual = ttk.Button(mainframe, text = "=", style = "Custom.TButton")
+buttonClear_Entry = ttk.Button(mainframe, text = "CE", command = Button_Erase_Entry, style = "Custom.TButton")
+buttonClear_All = ttk.Button(mainframe, text = "C", command = Erase_All, style = "Custom.TButton")
+buttonErase = ttk.Button(mainframe, text = "←", command = Button_Erase, style = "Custom.TButton")
+buttonEqual = ttk.Button(mainframe, text = "=", command = Equal, style = "Custom.TButton")
 
 division_button = ttk.Button(mainframe, text = "÷", command=lambda: button_click("÷"), style = "Custom.TButton")
 multiplication_button = ttk.Button(mainframe, text = "x", command=lambda: button_click("x"), style = "Custom.TButton")
