@@ -84,7 +84,7 @@ button_9= ttk.Button(mainframe, text = "9", command=lambda: button_click("9"), s
 #region Ubicacion de Botones y Ajuste al Mainframe
 #aquí ordenamos los botones dentro del Frame
 #Primera fila de botones
-fraction_button.grid(column = 0, row = 2, sticky = (N, S, E, W))
+fraction_button.grid(column = 0, row = 2,sticky = (N, S, E, W))
 buttonClear_All.grid(column = 1, row = 2, sticky = (N, S, E, W))
 buttonClear_Entry.grid(column = 2, row = 2, sticky = (N, S, E, W))
 buttonErase.grid(column = 3, row = 2, sticky = (N, S, E, W))
@@ -127,3 +127,5 @@ squareroot_button.grid(column = 1, row = 8, sticky = (N, S, E, W))
 #endregion
 
 root, mainloop() 
+
+#Esto es una prueba
