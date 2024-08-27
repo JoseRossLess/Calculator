@@ -15,8 +15,18 @@ def button_click(value):
         
 def Button_Erase():
     current_text = entry1.get()
-    if len(current_text) > 0:
-        entry1.set(current_text[:-1])
+    sequences = {
+        "sin": len("sin"),
+        "cos": len("cos"),
+        "tan": len("tan")
+    }
+    for sequence, length in sequences.items():
+        if current_text.endswith(sequence):
+            new_text = current_text[:-length]
+            entry1.set(new_text)
+            return
+    new_text = current_text[:-1]
+    entry1.set(new_text)
         
 def Button_Erase_Entry():
     current_text = entry1.get()
