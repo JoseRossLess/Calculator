@@ -45,7 +45,14 @@ def Equal():
     current_text = entry1.get()
     entry2.set(current_text)
         
-        
+    def powermeint (base, exponente):
+        resultado = 1
+        for i in range (exponente):
+            resultado *= base 
+        return resultado
+    
+    entry2.set(resultado)    
+   
 root = Tk()
 root.title("Calculadora")
 
