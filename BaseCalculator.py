@@ -51,7 +51,11 @@ def Equal():
             resultado *= base 
         return resultado
     
-    entry2.set(resultado)    
+    print (3**3)
+
+    print (pow (3,3))
+
+    print (powermeint (3,3))   
    
 root = Tk()
 root.title("Calculadora")
@@ -97,7 +101,7 @@ multiplication_button = ttk.Button(mainframe, text = "x", command=lambda: button
 add_button = ttk.Button(mainframe, text = "+", command=lambda: button_click("+"), style = "Custom.TButton")
 subtract_button = ttk.Button(mainframe, text = "-", command=lambda: button_click("-"), style = "Custom.TButton")
 squareroot_button = ttk.Button(mainframe, text = "√", command=lambda: button_click("√"), style = "Custom.TButton")
-expon_button = ttk.Button(mainframe, text = "x²", command=lambda: button_click("x²"), style = "Custom.TButton")
+expon_button = ttk.Button(mainframe, text = "x²", command=lambda: button_click("^"), style = "Custom.TButton")
 fraction_button = ttk.Button(mainframe, text = "a⅓", command=lambda: button_click("/"), style = "Custom.TButton")
 
 sin_button = ttk.Button(mainframe, text = "sin", command=lambda: button_click("sin"), style = "Custom.TButton")
