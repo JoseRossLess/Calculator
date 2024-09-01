@@ -45,6 +45,18 @@ def Equal():
     current_text = entry1.get()
     entry2.set(current_text)
         
+def Press_Key (event):
+    key = event.char
+    if key.isdigit():
+        button_click(key)
+    elif key in ['+','-','*','/']:
+        button_click(key)
+    elif key == '.':
+        button_click('.')
+    elif key == '\r':
+        Equal()
+    elif key == '\b':
+        Button_Erase()
         
 root = Tk()
 root.title("Calculadora")
@@ -160,5 +172,7 @@ squareroot_button.grid(column = 1, row = 8, sticky = (N, S, E, W))
 
 #endregion
 
-root, mainloop() 
+root.bind('<Key>',Press_Key)
+
+root.mainloop() 
 #NameChange
