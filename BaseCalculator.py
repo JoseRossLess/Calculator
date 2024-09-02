@@ -64,10 +64,24 @@ root.title("Calculadora")
 root.geometry("+800+80") #con esto establecemos dónde aparecera la ventana de la aplicación
 
 style = ttk.Style()
-style.configure("Custom.TButton", font = ("Arial",18))
+style.theme_use("clam")
+style.configure("Custom.TButton",
+                font = ("Arial",20),
+                relief = "flat",
+                width = 5,
+                background = "#232323",
+                foreground = "#FFFFFF"
+                )
+
+style.map("Custom.TButton",
+          background = [('active', '#333333')],
+          foreground = [('active', '#FFFFFF')],
+          bordercolor = "#000000",
+                relief = "flat")
 
 styles = ttk.Style()
-styles.configure('mainframe.TFrame', background ="#DBDBDB")
+styles.theme_use("clam")
+styles.configure('mainframe.TFrame', background ="#000000")
 
 mainframe = ttk.Frame(root, style="mainframe.TFrame")
 mainframe.grid(column=0, row=0, sticky = (N, S, E, W))
@@ -82,12 +96,18 @@ for i in range (9):
 
 entry1 = StringVar()
 entry1.set("0")
-label_entry1 = ttk.Label(mainframe, textvariable = entry1, anchor='e', font=("Arial", 24))
+label_entry1 = ttk.Label(mainframe, textvariable = entry1, anchor='e',
+                         font=("Arial", 24),
+                         background= "#101010",
+                         foreground = "#FFFFFF")
 label_entry1.grid(column=0, row=0, columnspan= 4, sticky= (N, S, W, E))
 
 entry2 = StringVar()
 entry2.set("")
-label_entry2 = ttk.Label(mainframe, textvariable = entry2, anchor='e', font=("Arial", 25))
+label_entry2 = ttk.Label(mainframe, textvariable = entry2, anchor='e', 
+                         font=("Arial", 25), 
+                         background= "#101010",
+                         foreground = "#FFFFFF")
 label_entry2.grid(column=0, row=1, columnspan= 4, sticky= (N, S, W, E))
 
 #region Botones de borrado y Operaciones
@@ -109,8 +129,8 @@ sin_button = ttk.Button(mainframe, text = "sin", command=lambda: button_click("s
 cos_button = ttk.Button(mainframe, text = "cos", command=lambda: button_click("cos"), style = "Custom.TButton")
 tan_button = ttk.Button(mainframe, text = "tan", command=lambda: button_click("tan"), style = "Custom.TButton")
 
-point_button = ttk.Button(mainframe, text = ".", command=lambda: button_click("."), style = "Custom.TButton")
-percentage_button = ttk.Button(mainframe, text ="%", command=lambda: button_click("%"), style = "Custom.TButton")
+point_button = ttk.Button(mainframe, text = ".", style = "Custom.TButton",command=lambda: button_click("."))
+percentage_button = ttk.Button(mainframe, text ="%", style = "Custom.TButton", command=lambda: button_click("%"))
 
 #endregion
 
