@@ -70,8 +70,9 @@ style.configure("Custom.TButton",
                 relief = "flat",
                 width = 5,
                 background = "#232323",
-                foreground = "#FFFFFF"
+                foreground = "#FFFFFF" 
                 )
+
 
 style.map("Custom.TButton",
           background = [('active', '#333333')],
