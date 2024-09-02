@@ -44,7 +44,7 @@ def Erase_All():
 def Equal():
     current_text = entry1.get()
     entry2.set(current_text)
-        
+
 def Press_Key (event):
     key = event.char
     if key.isdigit():
@@ -57,32 +57,17 @@ def Press_Key (event):
         Equal()
     elif key == '\b':
         Button_Erase()
-        
+
 root = Tk()
 root.title("Calculadora")
 
 root.geometry("+800+80") #con esto establecemos dónde aparecera la ventana de la aplicación
 
 style = ttk.Style()
-style.theme_use("clam")
-style.configure("Custom.TButton",
-                font = ("Arial",20),
-                relief = "flat",
-                width = 5,
-                background = "#232323",
-                foreground = "#FFFFFF" 
-                )
-
-
-style.map("Custom.TButton",
-          background = [('active', '#333333')],
-          foreground = [('active', '#FFFFFF')],
-          bordercolor = "#000000",
-                relief = "flat")
+style.configure("Custom.TButton", font = ("Arial",18))
 
 styles = ttk.Style()
-styles.theme_use("clam")
-styles.configure('mainframe.TFrame', background ="#000000")
+styles.configure('mainframe.TFrame', background ="#DBDBDB")
 
 mainframe = ttk.Frame(root, style="mainframe.TFrame")
 mainframe.grid(column=0, row=0, sticky = (N, S, E, W))
@@ -94,21 +79,15 @@ for i in range(4):
     mainframe.columnconfigure(i, weight = 1)
 for i in range (9):
     mainframe.rowconfigure(i, weight = 1)
-
+    
 entry1 = StringVar()
 entry1.set("0")
-label_entry1 = ttk.Label(mainframe, textvariable = entry1, anchor='e',
-                         font=("Arial", 24),
-                         background= "#101010",
-                         foreground = "#FFFFFF")
+label_entry1 = ttk.Label(mainframe, textvariable = entry1, anchor='e', font=("Arial", 24))
 label_entry1.grid(column=0, row=0, columnspan= 4, sticky= (N, S, W, E))
 
 entry2 = StringVar()
 entry2.set("")
-label_entry2 = ttk.Label(mainframe, textvariable = entry2, anchor='e', 
-                         font=("Arial", 25), 
-                         background= "#101010",
-                         foreground = "#FFFFFF")
+label_entry2 = ttk.Label(mainframe, textvariable = entry2, anchor='e', font=("Arial", 25))
 label_entry2.grid(column=0, row=1, columnspan= 4, sticky= (N, S, W, E))
 
 #region Botones de borrado y Operaciones
@@ -129,12 +108,10 @@ fraction_button = ttk.Button(mainframe, text = "a⅓", command=lambda: button_cl
 sin_button = ttk.Button(mainframe, text = "sin", command=lambda: button_click("sin"), style = "Custom.TButton")
 cos_button = ttk.Button(mainframe, text = "cos", command=lambda: button_click("cos"), style = "Custom.TButton")
 tan_button = ttk.Button(mainframe, text = "tan", command=lambda: button_click("tan"), style = "Custom.TButton")
-
-point_button = ttk.Button(mainframe, text = ".", style = "Custom.TButton",command=lambda: button_click("."))
-percentage_button = ttk.Button(mainframe, text ="%", style = "Custom.TButton", command=lambda: button_click("%"))
+point_button = ttk.Button(mainframe, text = ".", command=lambda: button_click("."), style = "Custom.TButton")
+percentage_button = ttk.Button(mainframe, text ="%", command=lambda: button_click("%"), style = "Custom.TButton")
 
 #endregion
-
 #region Botones Númericos
 button_0= ttk.Button(mainframe, text = "0", command=lambda: button_click("0"), style = "Custom.TButton")
 button_1= ttk.Button(mainframe, text = "1", command=lambda: button_click("1"), style = "Custom.TButton")
@@ -146,10 +123,12 @@ button_6= ttk.Button(mainframe, text = "6", command=lambda: button_click("6"), s
 button_7= ttk.Button(mainframe, text = "7", command=lambda: button_click("7"), style = "Custom.TButton")
 button_8= ttk.Button(mainframe, text = "8", command=lambda: button_click("8"), style = "Custom.TButton")
 button_9= ttk.Button(mainframe, text = "9", command=lambda: button_click("9"), style = "Custom.TButton")
-#endregion
 
+
+#endregion
 #region Ubicacion de Botones y Ajuste al Mainframe
 #aquí ordenamos los botones dentro del Frame
+
 #Primera fila de botones
 fraction_button.grid(column = 0, row = 2,sticky = (N, S, E, W))
 buttonClear_All.grid(column = 1, row = 2, sticky = (N, S, E, W))
@@ -185,7 +164,6 @@ percentage_button.grid(column = 0, row = 7, sticky = (N, S, E, W))
 button_0.grid(column = 1, row = 7, sticky = (N, S, E, W))
 point_button.grid(column = 2, row = 7, sticky = (N, S, E, W))
 buttonEqual.grid(column = 3, row = 7, sticky = (N, S, E, W))
-
 
 #fila extra
 expon_button.grid(column = 0, row = 8, sticky = (N, S, E, W))
