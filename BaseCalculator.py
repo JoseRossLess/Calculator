@@ -3,7 +3,7 @@
 from tkinter import *
 from tkinter import ttk
 import math
-from fractions import Fraction  # Importar Fraction para operaciones con fracciones de una manera mas presisa
+from fractions import Fraction
 
 def button_click(value):
     current_text = entry1.get()
@@ -42,18 +42,18 @@ def Erase_All():
         entry2.set(current_text[:0])
         
 def Equal():
-    current_text = entry1.get() # obtiene lo que el usuario ingresa en este caso son operaciones 
-    
+    current_text = entry1.get()
+
     try:
-        # fracciones
-        operators = ["+", "-", "x", "÷"] # aqui se define una lista de operadores para la operacion de fracciones
+        #fraccion
+        operators = ["+", "-", "x", "÷"]
         is_fraction_operation = any(op in current_text for op in operators) and "/" in current_text
-        
-        if is_fraction_operation: # se utliza un bucle for para realizar la operacion de las principales operadores
-            for op in operators:
+
+        if is_fraction_operation:
+            for op in operators: 
                 if op in current_text:
                     parts = current_text.split(op)
-                    if len(parts) == 2: #aqui se divide el tecto dos partes por lo que es fraccion por medio de un /
+                    if len(parts) == 2:
                         try:
                             fraction1 = Fraction(parts[0].strip())
                             fraction2 = Fraction(parts[1].strip())
@@ -67,30 +67,40 @@ def Equal():
                             elif op == "÷":
                                 result = fraction1 / fraction2
 
-                            decimal_result = round(float(result), 6) # aqui es donde comvierte el resultado de fraccion a decimal pero solo con 6 decimales
-                            entry1.set(str(result))
-                            entry2.set(f"{current_text} = {result}   ({decimal_result})")
+                            decimal_result = round(float(result), 2)
+                            entry1.set(f"{current_text} = {result}  ({decimal_result})")
                             return
-
+                        
                         except ValueError:
                             pass
-        # esto es para 1 sola fraccion por ejemplo 3/4
-        elif "/" in current_text: # operacion simple sin operaciones 
-            try: 
+
+        elif "/" in current_text:
+            try:
                 fraction_result = Fraction(current_text.strip())
-                decimal_result = round(float(fraction_result), 6)
-                entry1.set(str(fraction_result))
-                entry2.set(f"{current_text} = {fraction_result}   ({decimal_result})")
+                decimal_result = round(float(fraction_result), 2)
+                entry1.set(f"{current_text} = {fraction_result}    ({decimal_result})")
                 return
             except ValueError:
                 pass
-        
-        # si no es fraccion entonces dejar que lo resulava la parte que le corresponde a cada operacion
+
         entry2.set(current_text)
     
     except Exception as e:
-        pass
-   
+         pass
+
+def Press_Key (event):
+    key = event.char
+    if key.isdigit():
+        button_click(key)
+    elif key in ['+','-','*','/']:
+        button_click(key)
+    elif key == '.':
+        button_click('.')
+    elif key == '\r':
+        Equal()
+    elif key == '\b':
+        Button_Erase()
+
 root = Tk()
 root.title("Calculadora")
 
@@ -112,7 +122,7 @@ for i in range(4):
     mainframe.columnconfigure(i, weight = 1)
 for i in range (9):
     mainframe.rowconfigure(i, weight = 1)
-
+    
 entry1 = StringVar()
 entry1.set("0")
 label_entry1 = ttk.Label(mainframe, textvariable = entry1, anchor='e', font=("Arial", 24))
@@ -141,12 +151,10 @@ fraction_button = ttk.Button(mainframe, text = "a⅓", command=lambda: button_cl
 sin_button = ttk.Button(mainframe, text = "sin", command=lambda: button_click("sin"), style = "Custom.TButton")
 cos_button = ttk.Button(mainframe, text = "cos", command=lambda: button_click("cos"), style = "Custom.TButton")
 tan_button = ttk.Button(mainframe, text = "tan", command=lambda: button_click("tan"), style = "Custom.TButton")
-
 point_button = ttk.Button(mainframe, text = ".", command=lambda: button_click("."), style = "Custom.TButton")
 percentage_button = ttk.Button(mainframe, text ="%", command=lambda: button_click("%"), style = "Custom.TButton")
 
 #endregion
-
 #region Botones Númericos
 button_0= ttk.Button(mainframe, text = "0", command=lambda: button_click("0"), style = "Custom.TButton")
 button_1= ttk.Button(mainframe, text = "1", command=lambda: button_click("1"), style = "Custom.TButton")
@@ -158,10 +166,12 @@ button_6= ttk.Button(mainframe, text = "6", command=lambda: button_click("6"), s
 button_7= ttk.Button(mainframe, text = "7", command=lambda: button_click("7"), style = "Custom.TButton")
 button_8= ttk.Button(mainframe, text = "8", command=lambda: button_click("8"), style = "Custom.TButton")
 button_9= ttk.Button(mainframe, text = "9", command=lambda: button_click("9"), style = "Custom.TButton")
-#endregion
 
+
+#endregion
 #region Ubicacion de Botones y Ajuste al Mainframe
 #aquí ordenamos los botones dentro del Frame
+
 #Primera fila de botones
 fraction_button.grid(column = 0, row = 2,sticky = (N, S, E, W))
 buttonClear_All.grid(column = 1, row = 2, sticky = (N, S, E, W))
@@ -198,12 +208,13 @@ button_0.grid(column = 1, row = 7, sticky = (N, S, E, W))
 point_button.grid(column = 2, row = 7, sticky = (N, S, E, W))
 buttonEqual.grid(column = 3, row = 7, sticky = (N, S, E, W))
 
-
 #fila extra
 expon_button.grid(column = 0, row = 8, sticky = (N, S, E, W))
 squareroot_button.grid(column = 1, row = 8, sticky = (N, S, E, W))
 
 #endregion
+
+root.bind('<Key>',Press_Key)
 
 root.mainloop() 
 #NameChange
