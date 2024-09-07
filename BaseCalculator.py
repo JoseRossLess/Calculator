@@ -43,7 +43,15 @@ def Erase_All():
         
 def Equal():
     current_text = entry1.get()
-    entry2.set(current_text)
+    expression = current_text.replace("^","**")
+
+    try:
+        result = eval (expression)
+        entry2.set (str(result))
+    except zerodivisionerror:
+        entry2.set ("error")
+    except exception as e:
+        entry2.set ("syntax error")
 
 def Press_Key (event):
     key = event.char
@@ -102,7 +110,7 @@ multiplication_button = ttk.Button(mainframe, text = "x", command=lambda: button
 add_button = ttk.Button(mainframe, text = "+", command=lambda: button_click("+"), style = "Custom.TButton")
 subtract_button = ttk.Button(mainframe, text = "-", command=lambda: button_click("-"), style = "Custom.TButton")
 squareroot_button = ttk.Button(mainframe, text = "√", command=lambda: button_click("√"), style = "Custom.TButton")
-expon_button = ttk.Button(mainframe, text = "x²", command=lambda: button_click("x²"), style = "Custom.TButton")
+expon_button = ttk.Button(mainframe, text = "^", command=lambda: button_click("^"), style = "Custom.TButton")
 fraction_button = ttk.Button(mainframe, text = "a⅓", command=lambda: button_click("/"), style = "Custom.TButton")
 
 sin_button = ttk.Button(mainframe, text = "sin", command=lambda: button_click("sin"), style = "Custom.TButton")
