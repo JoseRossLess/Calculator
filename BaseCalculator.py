@@ -43,8 +43,6 @@ def Erase_All():
         
 def Equal():
     current_text = entry1.get()
-
-    print(hola mundo)
     entry2.set(current_text)
         
         
