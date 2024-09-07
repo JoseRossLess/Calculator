@@ -42,7 +42,18 @@ def Erase_All():
         entry2.set(current_text[:0])
         
 def Equal():
-    current_text = entry1.get()
+    current_text = entry1.get() 
+    if "cos" in current_text:
+        try:
+            num_str = current_text.replace("cos", "").strip() 
+            num = float(num_str) 
+            coseno = math.radians(num) 
+            resultado = math.cos(coseno) 
+            entry2.set(f'{resultado}') 
+            entry1.get(str(resultado)) 
+        except ValueError:
+            entry2.set("Error") 
+
     entry2.set(current_text)
 
 def Press_Key (event):
