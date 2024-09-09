@@ -5,13 +5,7 @@ from tkinter import *
 from tkinter import ttk
 import math
 
-def button_click(value):
-    current_text = entry1.get()
-    # Si el texto actual es "0", reemplázalo con el nuevo valor
-    if current_text == "0":
-        entry1.set(value)
-    else:
-        entry1.set(current_text + value)
+
         
 def Button_Erase():
     current_text = entry1.get()
@@ -162,6 +156,3 @@ squareroot_button.grid(column = 1, row = 8, sticky = (N, S, E, W))
 
 root, mainloop() 
 #NameChange
-
-#RestaByKevin
-
