@@ -7,7 +7,7 @@ from tkinter import E, N, S, W, StringVar, Tk, ttk
 def button_click(value):
     current_text = entry1.get()
     if current_text == "0":
-        entry1.set("0",value)
+        entry1.set(value)
     else:
         entry1.set(current_text + value)
         
