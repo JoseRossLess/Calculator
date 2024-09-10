@@ -42,23 +42,23 @@ def Erase_All():
         entry2.set(current_text[:0])
         
 def Equal():
-    current_text = entry1.get()
+    current_text = entry1.get() 
 
     try:
         #fraccion
-        operators = ["+", "-", "x", "÷"]
-        is_fraction_operation = any(op in current_text for op in operators) and "/" in current_text
+        operators = ["+", "-", "x", "÷"] 
+        is_fraction_operation = any(op in current_text for op in operators) and "/" in current_text 
 
-        if is_fraction_operation:
+        if is_fraction_operation: 
             for op in operators: 
-                if op in current_text:
-                    parts = current_text.split(op)
-                    if len(parts) == 2:
+                if op in current_text: 
+                    parts = current_text.split(op) 
+                    if len(parts) == 2: 
                         try:
-                            fraction1 = Fraction(parts[0].strip())
+                            fraction1 = Fraction(parts[0].strip()) 
                             fraction2 = Fraction(parts[1].strip())
 
-                            if op == "+":
+                            if op == "+": 
                                 result = fraction1 + fraction2
                             elif op == "-":
                                 result = fraction1 - fraction2
@@ -67,18 +67,18 @@ def Equal():
                             elif op == "÷":
                                 result = fraction1 / fraction2
 
-                            decimal_result = round(float(result), 2)
-                            entry1.set(f"{current_text} = {result}  ({decimal_result})")
-                            return
-                        
-                        except ValueError:
+                            decimal_result = round(float(result), 2) 
+                            entry2.set(f"{result}  ({decimal_result})")
+                            return 
+                    
+                        except ValueError: 
                             pass
 
-        elif "/" in current_text:
+        elif "/" in current_text: 
             try:
-                fraction_result = Fraction(current_text.strip())
+                fraction_result = Fraction(current_text.strip()) 
                 decimal_result = round(float(fraction_result), 2)
-                entry1.set(f"{current_text} = {fraction_result}    ({decimal_result})")
+                entry2.set(f"{fraction_result}    ({decimal_result})")
                 return
             except ValueError:
                 pass
