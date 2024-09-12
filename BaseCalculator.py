@@ -45,6 +45,32 @@ def Equal():
     current_text = entry1.get()
     entry2.set(current_text)
 
+
+
+    current_text = entry1.get()
+
+    try:
+      
+        if '%' in current_text:
+            parts = current_text.split('%')
+            if len(parts) == 2 and parts[1] == '':
+                
+                current_text = str(float(parts[0]) * 0.01)
+            else:
+                
+                base = float(parts[0]) 
+                percentage = float(parts[1])  
+                current_text = str(base * (percentage / 100))
+
+       
+        result = eval(current_text)
+        entry2.set(result)
+
+    except Exception as e:
+        entry2.set("Error")
+
+
+
 def Press_Key (event):
     key = event.char
     if key.isdigit():
