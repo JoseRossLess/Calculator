@@ -40,12 +40,15 @@ def Erase_All():
     current_text2 = entry2.get()
     if len(current_text2) > 0:
         entry2.set(current_text[:0])
-        
+
 def Equal():
-    current_text = entry1.get()
-    entry2.set(current_text)
-        
-        
+    try:
+        current_text = entry1.get()
+        result = eval(current_text.replace('÷', '/'))
+        entry2.set(str(result))
+    except Exception as e:
+        entry2.set("Error")    
+          
 root = Tk()
 root.title("Calculadora")
 
@@ -159,6 +162,6 @@ expon_button.grid(column = 0, row = 8, sticky = (N, S, E, W))
 squareroot_button.grid(column = 1, row = 8, sticky = (N, S, E, W))
 
 #endregion
-
+    
 root, mainloop() 
 #NameChange
