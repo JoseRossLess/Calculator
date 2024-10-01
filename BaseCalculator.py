@@ -65,10 +65,27 @@ def Button_Craft(parent, text, command, row, col, rowspan = 1, colspan = 1, bg =
 
 root = Tk()
 root.title("Calculadora")
-
 root.geometry("+800+80") #con esto establecemos dónde aparecera la ventana de la aplicación
 
+mainframe = Frame(root, bg = "#DBDBDB")
+mainframe.grid(column = 0, row = 0, sticky = (N, S, E, W))
 
+root.columnconfigure(0, weight = 1)
+root.rowconfigure(0, weight = 1)
+
+for i in range(4):
+    mainframe.columnconfigure(i, weight = 1)
+for i in range(9):
+    mainframe.rowconfigure(i, weight = 1)
+    
+entry1 = StringVar(value = "0")
+entry2 = StringVar
+
+label_entry1 = Label(mainframe, textvariable = entry1, anchor = 'e', font = ("Arial", 24), bg = "#FFFFFF", fg = "#000000" )
+label_entry1.grid(column = 0, row = 0, columnspan = 4, sticky = (N, S, E, W))
+
+label_entry2 = Label(mainframe, textvariable = entry2, anchor = 'e', font = ("Arial", 26), bg = "#FFFFFF", fg = "#000000" )
+label_entry2.grid(column = 0, row = 1, columnspan = 4, sticky = (N, S, E, W))
 
 root.bind('<Key>',Press_Key)
 
