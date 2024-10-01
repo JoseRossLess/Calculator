@@ -87,6 +87,8 @@ label_entry1.grid(column = 0, row = 0, columnspan = 4, sticky = (N, S, E, W))
 label_entry2 = Label(mainframe, textvariable = entry2, anchor = 'e', font = ("Arial", 26), bg = "#FFFFFF", fg = "#000000" )
 label_entry2.grid(column = 0, row = 1, columnspan = 4, sticky = (N, S, E, W))
 
+
+
 root.bind('<Key>',Press_Key)
 
 root.mainloop() 
