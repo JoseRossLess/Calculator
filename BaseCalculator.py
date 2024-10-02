@@ -48,16 +48,23 @@ def Press_Key(event):
     elif key == '\b':
         Button_Erase()
         
-def Button_Craft(parent, text, command, row, col, rowspan=1, colspan=1, bg="#f0f0f0", fg="black"):
+def Button_Craft(parent, text, command, row, col, rowspan=1, colspan=1, bg="#131313", fg="white"):
     button = Button(parent, text=text, command=command, width=6, height=1, font=('Segoe UI', 18), bg=bg, fg=fg)
     button.grid(row=row, column=col, rowspan=rowspan, columnspan=colspan, sticky="nsew")
+    
+        # Evento para cambiar el color al pasar el cursor sobre el botón
+    button.bind("<Enter>", lambda e: button.config(bg= "#222222"))
+    
+    # Evento para restaurar el color original cuando el cursor sale del botón
+    button.bind("<Leave>", lambda e: button.config(bg=bg))
+    
     return button
 
 root = Tk()
 root.title("Calculadora")
 root.geometry("+800+200")
 
-mainframe = Frame(root, bg="#DBDBDB")
+mainframe = Frame(root, bg="#111111")
 mainframe.grid(column=0, row=0, sticky=(N, S, E, W))
 
 root.columnconfigure(0, weight=1)
@@ -71,13 +78,13 @@ for i in range(9):
 entry1 = StringVar(value="0")
 entry2 = StringVar()
 
-label_entry1 = Label(mainframe, textvariable=entry1, anchor='e', font=("Verdana", 22), bg="#FFFFFF", fg="#000000")
+label_entry1 = Label(mainframe, textvariable=entry1, anchor='e', font=("Verdana", 22), bg="#2b2828", fg="#ffffff")
 label_entry1.grid(column=0, row=0, columnspan=4, sticky=(N, S, E, W))
 
-label_entry2 = Label(mainframe, textvariable=entry2, anchor='e', font=("Segoe UI", 30), bg="#FFFFFF", fg="#000000")
+label_entry2 = Label(mainframe, textvariable=entry2, anchor='e', font=("Verdana", 30), bg="#2b2828", fg="#ffffff")
 label_entry2.grid(column=0, row=1, columnspan=4, sticky=(N, S, E, W))
 
-Button_Craft(mainframe, "√", lambda: button_click("√"), 2, 0, bg="#FFD700")
+Button_Craft(mainframe, "√", lambda: button_click("√"), 2, 0)
 Button_Craft(mainframe, "CE", Button_Erase_Entry, 2, 1)
 Button_Craft(mainframe, "C", Erase_All, 2, 2)
 Button_Craft(mainframe, "←", Button_Erase, 2, 3)
