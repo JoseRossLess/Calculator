@@ -39,8 +39,8 @@ def Erase_All():
         entry1.set("0")
     current_text2 = entry2.get()
     if len(current_text2) > 0:
-        entry2.set(current_text[:0])
-        
+        entry2.set(current_text[:0])   
+
 def Equal():
     current_text = entry1.get()
     try:
