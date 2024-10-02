@@ -40,16 +40,19 @@ def Erase_All():
     current_text2 = entry2.get()
     if len(current_text2) > 0:
         entry2.set(current_text[:0])   
-        
+
 def Equal():
     current_text = entry1.get()
-    try:
-        partes = current_text.split('+')
-        resultado = sum(int(parte) for parte in partes)
-        entry1.set(str(resultado))
-        entry2.set("")  
-    except ValueError:
-        entry1.set("Error")
+    if "+" in current_text:
+        numbers = current_text.split("+")
+        try:
+            result = sum(float(num) for num in numbers)
+            if result.is_integer():
+                entry1.set(str(int(result)))
+            else:
+                entry1.set(str(result))
+        except ValueError:
+            entry1.set("Error")
 
 def Press_Key (event):
     key = event.char
