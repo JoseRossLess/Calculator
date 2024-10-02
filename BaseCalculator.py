@@ -47,15 +47,15 @@ def Press_Key(event):
         Equal()
     elif key == '\b':
         Button_Erase()
-
+        
 def Button_Craft(parent, text, command, row, col, rowspan=1, colspan=1, bg="#f0f0f0", fg="black"):
-    button = Button(parent, text=text, command=command, padx=20, pady=20, font=('Arial', 18), bg=bg, fg=fg)
+    button = Button(parent, text=text, command=command, width=6, height=1, font=('Segoe UI', 18), bg=bg, fg=fg)
     button.grid(row=row, column=col, rowspan=rowspan, columnspan=colspan, sticky="nsew")
     return button
 
 root = Tk()
 root.title("Calculadora")
-root.geometry("+800+100")
+root.geometry("+800+200")
 
 mainframe = Frame(root, bg="#DBDBDB")
 mainframe.grid(column=0, row=0, sticky=(N, S, E, W))
@@ -71,10 +71,10 @@ for i in range(9):
 entry1 = StringVar(value="0")
 entry2 = StringVar()
 
-label_entry1 = Label(mainframe, textvariable=entry1, anchor='e', font=("Arial", 24), bg="#FFFFFF", fg="#000000")
+label_entry1 = Label(mainframe, textvariable=entry1, anchor='e', font=("Verdana", 22), bg="#FFFFFF", fg="#000000")
 label_entry1.grid(column=0, row=0, columnspan=4, sticky=(N, S, E, W))
 
-label_entry2 = Label(mainframe, textvariable=entry2, anchor='e', font=("Arial", 26), bg="#FFFFFF", fg="#000000")
+label_entry2 = Label(mainframe, textvariable=entry2, anchor='e', font=("Segoe UI", 30), bg="#FFFFFF", fg="#000000")
 label_entry2.grid(column=0, row=1, columnspan=4, sticky=(N, S, E, W))
 
 Button_Craft(mainframe, "√", lambda: button_click("√"), 2, 0, bg="#FFD700")
@@ -83,7 +83,7 @@ Button_Craft(mainframe, "C", Erase_All, 2, 2)
 Button_Craft(mainframe, "←", Button_Erase, 2, 3)
 
 # Crear Menubutton para funciones trigonométricas
-dropdown_button = Menubutton(mainframe, text="Trig.", relief=RAISED, font=('Arial', 18))
+dropdown_button = Menubutton(mainframe, text="Trig.", relief=RAISED, font=('Segoe UI', 18))
 dropdown_button.grid(row=3, column=0, sticky="nsew")   # Cambia la posición según sea necesario
 dropdown_menu = Menu(dropdown_button, tearoff=0)
 dropdown_button.config(menu=dropdown_menu)
