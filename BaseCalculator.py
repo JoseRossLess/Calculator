@@ -43,9 +43,36 @@ def Erase_All():
         
 def Equal():
     current_text = entry1.get()
-    expression = current_text.replace("^","**")
+    entry2.set(current_text)
+# inicio de la potenciacion ejemplo. -----------------------------------------------------------------------------
 
-    
+def agregar_numero(numero):
+    pantalla.insert(tk.END, numero)
+
+# Función para limpiar la pantalla
+def limpiar():
+    pantalla.delete(0, tk.END)
+
+
+def calcular():
+    try:
+        expresion = pantalla.get() # obtiene el contenido de la pantalla como una cadena de texto por ejemplo si se ingresa 2**3 la variable expresion tendra 2**3
+        
+        # Separar los números y el operador de potenciación
+        if "**" in expresion: # verifica si la expresion contiene ** que es el simbolo de potecnaicion 
+            base, exponente = expresion.split("^") # utiliza el metodo split para dividir la expresion en dos partes la base antes ** y el exponente el numero despues de ** si es 2**3 sera "2", "3", por lo que base es 2 y exponente 3
+            resultado = math.pow(float(base), float(exponente)) # qui  se usa math pow para realizar operacion de potenciacion que convierte la base y expoenente de texto "2" y "3" a un numero float y lo eleva a base exponente 
+        else:
+            # Si no hay potenciación, asumimos que es una operación simple
+            resultado = eval_aritmetico(expresion)
+        
+        pantalla.delete(0, tk.END)
+        pantalla.insert(tk.END, str(resultado)) # inserta el resultado de la potenciacion en este caso 8 en la patalla 
+    except:
+        pantalla.delete(0, tk.END)# borrar el contenido 
+        pantalla.insert(tk.END, "Error") 
+
+# fin de la poteniacion ejemplo.--------------------------------------------------------------
 
 def Press_Key (event):
     key = event.char
