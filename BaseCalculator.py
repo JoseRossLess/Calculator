@@ -45,13 +45,7 @@ def Equal():
     current_text = entry1.get()
     expression = current_text.replace("^","**")
 
-    try:
-        result = eval (expression)
-        entry2.set (str(result))
-    except zerodivisionerror:
-        entry2.set ("error")
-    except exception as e:
-        entry2.set ("syntax error")
+    
 
 def Press_Key (event):
     key = event.char
