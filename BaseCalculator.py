@@ -2,6 +2,7 @@ from tkinter import *
 from tkinter import ttk
 import math
 import re
+from fractions import Fraction
 
 def button_click(value):
     current_text = entry1.get()
@@ -34,25 +35,34 @@ def Erase_All():
     entry2.set("")
 
 def Calculate(expr):
-
-    expresion = expresion.replace
-    ##En esta línea incluir los caracteres a cambiar
-
-    Tokens = re.findall(r'[\d\.]+|[+*/-]|', expr)
-
-    ##Usar numeros posteriores como argumentos en fucniones trigonometricas y radicación
     
-    def Operation(Sign):
-        
-        ##Operar sumas, restas, multiplicación, etc.
-        
-        return Sign[0]
+    expresion = expr.replace("÷", "/").replace("x", "*")  
 
-    return Operation(Tokens)
+    
+    Tokens = re.findall(r'\d+/\d+|[\d\.]+|[+*/-]', expresion)  # Aceptar fracciones, decimales y operadores
+
+    result = ""
+    for token in Tokens:
+        if re.match(r'\d+/\d+', token):  # Si es una fracción
+            frac = Fraction(token)
+            # Mostrar el valor como fracción y su valor decimal
+            result += f"{frac} = {float(frac):.3f}"  
+        elif re.match(r'[\d\.]+', token):  # Si es un número o decimal
+            result += token
+        else:  
+            result += token
+
+    return result
+
+
+def Operation(Sign):
+    ## Operar sumas, restas, multiplicación, etc.
+    return Sign[0]
+
 
 def Equal():
     current_text = entry1.get().strip()
-    
+
     try:
         resultado = Calculate(current_text)
     except Exception as e:
@@ -155,7 +165,6 @@ Button_Craft(mainframe, "%", lambda: button_click("%"), 7, 0)
 Button_Craft(mainframe, "0", lambda: button_click("0"), 7, 1)
 Button_Craft(mainframe, ".", lambda: button_click("."), 7, 2)
 Button_Craft(mainframe, "=", Equal, 7, 3)
-
 
 root.bind("<Key>", Press_Key)
 
