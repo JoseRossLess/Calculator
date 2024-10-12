@@ -36,22 +36,18 @@ def Erase_All():
 
 def Calculate(expr):
     
-    expresion = expr.replace("÷", "/").replace("x", "*")  
 
-    
-    Tokens = re.findall(r'\d+/\d+|[\d\.]+|[+*/-]', expresion)  # Aceptar fracciones, decimales y operadores
+    # Encontrar fracciones unitarias 
+    Tokens = re.findall(r'\d+/\d+|[\d\.]+|[+*/-]', expr)
 
     result = ""
     for token in Tokens:
         if re.match(r'\d+/\d+', token):  # Si es una fracción
             frac = Fraction(token)
-            # Mostrar el valor como fracción y su valor decimal
-            result += f"{frac} = {float(frac):.3f}"  
-        elif re.match(r'[\d\.]+', token):  # Si es un número o decimal
-            result += token
-        else:  
-            result += token
-
+            # Mostrar el valor decimal
+            result += f"{float(frac):.3f}" 
+        else: 
+            result += token + " "
     return result
 
 
@@ -143,7 +139,7 @@ dropdown_button.bind("<Leave>", lambda e: dropdown_button.config(bg="#131313"))
 dropdown_button["menu"] = dropdown_menu
 
 Button_Craft(mainframe, "x²", lambda: button_click("^"), 3, 1)
-Button_Craft(mainframe, "1/3", lambda: button_click("1/3"), 3, 2)
+Button_Craft(mainframe, "/", lambda: button_click("/"), 3, 2)
 Button_Craft(mainframe, "÷", lambda: button_click("÷"), 3,3) 
 
 Button_Craft(mainframe, "7", lambda: button_click("7"), 4, 0)
