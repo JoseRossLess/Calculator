@@ -35,18 +35,17 @@ def Erase_All():
 
 def Calculate(expr):
 
-    expresion = expresion.replace
-    ##En esta línea incluir los caracteres a cambiar
+    expr = expr.replace('x', '*')
 
-    Tokens = re.findall(r'[\d\.]+|[+*/-]|', expr)
+    Tokens = re.findall(r'[\d\.]+|[+*/-]', expr)
 
     ##Usar numeros posteriores como argumentos en fucniones trigonometricas y radicación
     
-    def Operation(Sign):
+    def Operation(LisTokens):
         
-        ##Operar sumas, restas, multiplicación, etc.
+        ##Operar sumas, restas, multiplicación, etc
         
-        return Sign[0]
+        return LisTokens[0] if LisTokens else "0"
 
     return Operation(Tokens)
 
