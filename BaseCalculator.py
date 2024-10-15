@@ -23,40 +23,8 @@ def Button_Erase():
             NewText = current_text[:-length]
             entry1.set(NewText)
             return
-<<<<<<< HEAD
-    new_text = current_text[:-1]
-    entry1.set(new_text)
-        
-def Button_Erase_Entry():
-    current_text = entry1.get()
-    if len(current_text) > 0:
-        entry1.set("0")
-        
-def Erase_All():
-    current_text = entry1.get()
-    if len(current_text) > 0:
-        entry1.set("0")
-    current_text2 = entry2.get()
-    if len(current_text2) > 0:
-        entry2.set(current_text[:0])   
-
-def Equal():
-    current_text = entry1.get()
-    try:
-        partes = current_text.split('+')
-        partes = [parte.strip() for parte in partes]
-        resultado = sum(float(parte) for parte in partes) 
-        if resultado.is_integer():
-            entry1.set(str(int(resultado)))
-        else:
-            entry1.set(str(resultado))
-        entry2.set("")  
-    except ValueError:
-        entry1.set("Syntax Error")
-=======
     NewText = current_text[:-1]
     entry1.set(NewText)
->>>>>>> main
 
 def Button_Erase_Entry():
     entry1.set("0")
