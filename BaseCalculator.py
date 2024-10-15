@@ -13,7 +13,9 @@ def button_click(value):
         entry1.set(value)
     else:
         entry1.set(current_text + value)
-        
+
+     #ejemplo lunes
+
 def Button_Erase():
     current_text = entry1.get()
     sequences = {
