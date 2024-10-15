@@ -37,7 +37,7 @@ def Calculate(expr):
 
     expr = expr.replace('x', '*')
 
-    Tokens = re.findall(r'[\d\.]+|[+*/()-]', expr)
+    Tokens = re.findall(r'[\d\.]+|[+*/-]', expr)
 
     ##Usar numeros posteriores como argumentos en fucniones trigonometricas y radicación
     #45+8-8*5
