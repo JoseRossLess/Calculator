@@ -33,7 +33,7 @@ def Erase_All():
     entry1.set("0")
     entry2.set("")
 
-def calcular(expr):
+def Calculate(expr):
 
     expr = expr.replace('x', '*')
 
@@ -61,7 +61,7 @@ def Equal():
     current_text = entry1.get().strip()
     
     try:
-        resultado = calcular(current_text)
+        resultado = Calculate(current_text)
     except Exception as e:
         resultado = "Error"
 
