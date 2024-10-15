@@ -35,19 +35,27 @@ def Erase_All():
 
 def calcular(expr):
 
-    ##En esta línea incluir los caracteres a cambiar
+    expr = expr.replace('x', '*')
 
-    Tokens = re.findall(r'[\d\.]+', expr)
+    Tokens = re.findall(r'[\d\.]+|[+*/()-]', expr)
 
     ##Usar numeros posteriores como argumentos en fucniones trigonometricas y radicación
-    
-    def operacion(ops):
+    #45+8-8*5
+    def Operation(LisTokens):
         
+        while '*' in LisTokens:
+            for index in range(len(LisTokens)):
+                if LisTokens[index] == '*':
+                    LisTokens[index - 1] = str(float(LisTokens[index - 1]) * float(LisTokens[index + 1]))
+                    del LisTokens [index:index + 2]
+                    break
+                
+                
         ##Operar sumas, restas, multiplicación, etc.
         
-        return ops[0]
+        return LisTokens[0] if LisTokens else "0"
 
-    return operacion(Tokens)
+    return Operation(Tokens)
 
 def Equal():
     current_text = entry1.get().strip()
