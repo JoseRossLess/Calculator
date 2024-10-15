@@ -40,6 +40,7 @@ def Calculate(expr):
     Tokens = re.findall(r'[\d\.]+|[+*/-]', expr)
 
     ##Usar numeros posteriores como argumentos en fucniones trigonometricas y radicación
+
     #45+8-8*5
     def Operation(LisTokens):
         
@@ -51,8 +52,8 @@ def Calculate(expr):
                     break
                 
                 
-        ##Operar sumas, restas, multiplicación, etc.
-        
+        ##Operar sumas, restas, multiplicación, etc. 
+
         return LisTokens[0] if LisTokens else "0"
 
     return Operation(Tokens)
