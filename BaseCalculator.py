@@ -2,6 +2,7 @@ from tkinter import *
 from tkinter import ttk
 import math
 import re
+from fractions import Fraction 
 
 def button_click(value):
     current_text = entry1.get()
@@ -63,17 +64,43 @@ def Erase_All():
 
 def Calculate(expr):
 
-
-
-    Tokens = re.findall(r'[\d\.]+|[+*/()-]+|cos', expr)
-
-
     
     def Operation(Sign):
 
         expr = expr.replace('x', '*')
 
-    Tokens = re.findall(r'[\d\.]+|[+*/-]', expr)
+    Tokens = re.findall(r'cos|\d+/\d+|[\d\.]+|[+*/()-]+', expr)
+
+    result = ""
+    i = 0  # Controlar el índice manualmente
+
+    while i < len(Tokens):
+        token = Tokens[i]
+
+        # Si es una fracción
+        if re.match(r'\d+/\d+', token):
+            frac = Fraction(token)
+            # Mostrar el valor decimal de la fracción
+            result += f"{float(frac):.3f} "
+        
+        # Si es la función 'cos'
+        elif token == 'cos' and i + 1 < len(Tokens) and re.match(r'^[\d\.]+$', Tokens[i + 1]):
+            numero = float(Tokens[i + 1])
+            coseno = math.cos(math.radians(numero))  # Calcular el coseno
+            coseno_redondeado = round(coseno, 3)  # Redondear a 4 decimales
+            result += str(coseno_redondeado) + " "
+            i += 1  # Saltar el siguiente token que es el número usado por 'cos'
+        
+        # Si es un número, operador u otro token
+        else:
+            result += token + " "
+
+        i += 1  # Avanzar al siguiente token
+
+        return result.strip()
+    
+
+    
 
     ##Usar numeros posteriores como argumentos en fucniones trigonometricas y radicación
 
