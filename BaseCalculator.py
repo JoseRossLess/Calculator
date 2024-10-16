@@ -44,8 +44,37 @@ def Erase_All():
 def Equal():
     current_text = entry1.get()
     entry2.set(current_text)
-        
-        
+
+def raiz_cuadrada(numero):
+    """Calcula la raíz cuadrada de un número."""
+    if numero < 0:
+        return "Error: No se puede calcular la raíz cuadrada de un número negativo."
+    return math.sqrt(numero)
+
+def menu():
+    """Muestra el menú de opciones."""
+    print("Seleccione una opción:")
+    print("1. Calcular la raíz cuadrada")
+    print("2. Salir")
+
+def main():
+    while True:
+        menu()
+        opcion = input("Ingrese su opción: ")
+
+        if opcion == '1':
+            numero = float(input("Ingrese un número: "))
+            resultado = raiz_cuadrada(numero)
+            print(f"La raíz cuadrada de {numero} es: {resultado}")
+        elif opcion == '2':
+            print("Saliendo del programa. ¡Hasta luego!")
+            break
+        else:
+            print("Opción no válida. Por favor, intente de nuevo.")
+
+if 'name'== "main":
+    main()
+
 root = Tk()
 root.title("Calculadora")
 
