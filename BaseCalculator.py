@@ -4,6 +4,7 @@ import math
 import re
 from fractions import Fraction
 
+
 def button_click(value):
     current_text = entry1.get()
     if current_text == "0":
@@ -35,29 +36,33 @@ def Erase_All():
     entry2.set("")
 
 def Calculate(expr):
-    
 
-    # Encontrar fracciones unitarias 
-    Tokens = re.findall(r'\d+/\d+|[\d\.]+|[+*/-]', expr)
+    expr = expr.replace('x', '*')
 
-    result = ""
-    for token in Tokens:
-        if re.match(r'\d+/\d+', token):  # Si es una fracción
-            frac = Fraction(token)
-            # Mostrar el valor decimal
-            result += f"{float(frac):.3f}" 
-        else: 
-            result += token + " "
-    return result
+    Tokens = re.findall(r'[\d\.]+|[+*/-]', expr)
 
+    ##Usar numeros posteriores como argumentos en fucniones trigonometricas y radicación
 
-def Operation(Sign):
-    ## Operar sumas, restas, multiplicación, etc.
-    return Sign[0]
+    #45+8-8*5
+    def Operation(LisTokens):
+        
+        while '*' in LisTokens:
+            for index in range(len(LisTokens)):
+                if LisTokens[index] == '*':
+                    LisTokens[index - 1] = str(float(LisTokens[index - 1]) * float(LisTokens[index + 1]))
+                    del LisTokens [index:index + 2]
+                    break
+                
+                
+        ##Operar sumas, restas, multiplicación, etc. 
 
+        return LisTokens[0] if LisTokens else "0"
+
+    return Operation(Tokens)
 
 def Equal():
     current_text = entry1.get().strip()
+    
 
     try:
         resultado = Calculate(current_text)
@@ -139,7 +144,11 @@ dropdown_button.bind("<Leave>", lambda e: dropdown_button.config(bg="#131313"))
 dropdown_button["menu"] = dropdown_menu
 
 Button_Craft(mainframe, "x²", lambda: button_click("^"), 3, 1)
+
 Button_Craft(mainframe, "/", lambda: button_click("/"), 3, 2)
+
+Button_Craft(mainframe, "1/3", lambda: button_click("1/3"), 3, 2)
+
 Button_Craft(mainframe, "÷", lambda: button_click("÷"), 3,3) 
 
 Button_Craft(mainframe, "7", lambda: button_click("7"), 4, 0)
@@ -152,6 +161,7 @@ Button_Craft(mainframe, "5", lambda: button_click("5"), 5, 1)
 Button_Craft(mainframe, "6", lambda: button_click("6"), 5, 2)
 Button_Craft(mainframe, "−", lambda: button_click("-"), 5, 3)
 
+
 Button_Craft(mainframe, "1", lambda: button_click("1"), 6, 0)
 Button_Craft(mainframe, "2", lambda: button_click("2"), 6, 1)
 Button_Craft(mainframe, "3", lambda: button_click("3"), 6, 2)
@@ -162,6 +172,23 @@ Button_Craft(mainframe, "0", lambda: button_click("0"), 7, 1)
 Button_Craft(mainframe, ".", lambda: button_click("."), 7, 2)
 Button_Craft(mainframe, "=", Equal, 7, 3)
 
+
+Button_Craft(mainframe, "1", lambda: button_click("1"), 6, 0)
+Button_Craft(mainframe, "2", lambda: button_click("2"), 6, 1)
+Button_Craft(mainframe, "3", lambda: button_click("3"), 6, 2)
+Button_Craft(mainframe, "+", lambda: button_click("+"), 6, 3)
+
+
+Button_Craft(mainframe, "%", lambda: button_click("%"), 7, 0)
+Button_Craft(mainframe, "0", lambda: button_click("0"), 7, 1)
+Button_Craft(mainframe, ".", lambda: button_click("."), 7, 2)
+Button_Craft(mainframe, "=", Equal, 7, 3)
+
 root.bind("<Key>", Press_Key)
 
 root.mainloop()
+
+root.bind("<Key>", Press_Key)
+
+root.mainloop()
+
