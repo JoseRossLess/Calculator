@@ -39,19 +39,6 @@ def Erase_All():
     current_text2 = entry2.get()
     if len(current_text2) > 0:
         entry2.set(current_text[:0])
-        
-def Equal():
-    current_text = entry1.get() 
-    if "cos" in current_text:
-        try:
-            num_str = current_text.replace("cos", "").strip() 
-            num = float(num_str) 
-            coseno = math.radians(num) 
-            resultado = math.cos(coseno) 
-            entry2.set(f'{resultado}') 
-            entry1.get(str(resultado)) 
-        except ValueError:
-            entry2.set("Error") 
 
     entry2.set(current_text)
 
@@ -69,37 +56,15 @@ def Calculate(expr):
 
         expr = expr.replace('x', '*')
 
-    Tokens = re.findall(r'cos|\d+/\d+|[\d\.]+|[+*/()-]+', expr)
-
-    result = ""
-    i = 0  # Controlar el índice manualmente
-
-    while i < len(Tokens):
-        token = Tokens[i]
-
-        # Si es una fracción
-        if re.match(r'\d+/\d+', token):
-            frac = Fraction(token)
-            # Mostrar el valor decimal de la fracción
-            result += f"{float(frac):.3f} "
-        
-        # Si es la función 'cos'
-        elif token == 'cos' and i + 1 < len(Tokens) and re.match(r'^[\d\.]+$', Tokens[i + 1]):
-            numero = float(Tokens[i + 1])
-            coseno = math.cos(math.radians(numero))  # Calcular el coseno
-            coseno_redondeado = round(coseno, 3)  # Redondear a 4 decimales
-            result += str(coseno_redondeado) + " "
-            i += 1  # Saltar el siguiente token que es el número usado por 'cos'
-        
-        # Si es un número, operador u otro token
-        else:
-            result += token + " "
-
-        i += 1  # Avanzar al siguiente token
-
-        return result.strip()
-    
-
+    Tokens = re.findall(r'[\d\.]+|[+*/-]|cos', expr)
+    while 'cos' in Tokens:
+        for index, funcion in enumerate (Tokens):
+            if funcion in ('cos', 'frac'):
+                argumento = float ( Tokens [index + 1])
+                if funcion == 'cos':
+                    Tokens[index] = str(math.cos(math.radians(argumento))) 
+                Tokens [index + 1] = ''
+                Tokens = list(filter(None,Tokens))
     
 
     ##Usar numeros posteriores como argumentos en fucniones trigonometricas y radicación
