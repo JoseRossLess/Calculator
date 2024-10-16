@@ -63,35 +63,35 @@ def Erase_All():
 
 def Calculate(expr):
 
-    ##En esta línea incluir los caracteres a cambiar
+
 
     Tokens = re.findall(r'[\d\.]+|[+*/()-]+|cos', expr)
-
-    # coseno 
-    result = ""
-    
-    for i in range(len(Tokens)):
-        if Tokens[i] == 'cos' and i + 1 < len(Tokens) and re.match(r'^[\d\.]+$', Tokens[i + 1]):# verifica si los token son validos 
-            try:
-                numero = float(Tokens[i + 1])
-                coseno = math.cos(math.radians(numero))  # Calculamos el coseno
-                coseno_redondeado = round(coseno, 4)  # Redondeamos a 4 decimales
-                result += str(coseno_redondeado) 
-                i += 1  # Saltamos al siguiente token
-            except ValueError:
-                return "Error"  # Si no se puede convertir a número, retornar error
-
-        result += Tokens[i]  # Agregar el token al resultado si no es 'cos'
-
-    return result
 
 
     
     def Operation(Sign):
+
+        expr = expr.replace('x', '*')
+
+    Tokens = re.findall(r'[\d\.]+|[+*/-]', expr)
+
+    ##Usar numeros posteriores como argumentos en fucniones trigonometricas y radicación
+
+    #45+8-8*5
+    def Operation(LisTokens):
+
         
-        ##Operar sumas, restas, multiplicación, etc.
-        
-        return Sign[0]
+        while '*' in LisTokens:
+            for index in range(len(LisTokens)):
+                if LisTokens[index] == '*':
+                    LisTokens[index - 1] = str(float(LisTokens[index - 1]) * float(LisTokens[index + 1]))
+                    del LisTokens [index:index + 2]
+                    break
+                
+                
+        ##Operar sumas, restas, multiplicación, etc. 
+
+        return LisTokens[0] if LisTokens else "0"
 
     return Operation(Tokens)
 
