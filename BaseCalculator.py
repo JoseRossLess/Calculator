@@ -54,6 +54,20 @@ def Calculate(expr):
 
     Tokens = re.findall(r'[\d\.]+|[+*/-]|cos', expr)
 
+    # fraccion Edin 
+    while ':' in Tokens:
+        for index, funcion in enumerate (Tokens): # para recorrer la lista de tokens usando enumarete
+            if funcion in (':'):
+                numerador = float(Tokens[index - 1])
+                denominador = float(Tokens[index + 1])
+                resultado = round(numerador / denominador, 3)
+
+                Tokens[index - 1] = str(resultado)
+                Tokens[index] = ''
+                Tokens[index + 1] = ''
+                Tokens = list(filter(None, Tokens))
+                break
+
     # coseno daniel 
     while 'cos' in Tokens:# este bucle se ba a ejecutar mientras la palabra while este en la lista de tokens
         for index in range(len(Tokens)):  # este recorre cada uno de los tokens 
