@@ -53,15 +53,19 @@ def Calculate(expr):
     expr = expr.replace('x', '*')
 
     Tokens = re.findall(r'[\d\.]+|[+*/-]|cos', expr)
-    while 'cos' in Tokens:
-        for index, funcion in enumerate (Tokens):
-            if funcion in ('cos',):
-                argumento = float ( Tokens [index + 1])
+
+    # coseno daniel 
+    while 'cos' in Tokens:# este bucle se ba a ejecutar mientras la palabra while este en la lista de tokens
+        for index in range(len(Tokens)):  # este recorre cada uno de los tokens 
+            funcion = Tokens[index]
+            if funcion in ('cos',):  # No se elimina ningún if
+                argumento = float(Tokens[index + 1])
                 if funcion == 'cos':
-                    Tokens[index] = str(math.cos(math.radians(argumento))) 
-                Tokens [index + 1] = ''
-                Tokens = list(filter(None,Tokens))
-    
+                # Calcula el coseno
+                    Tokens[index] = str(round(math.cos(math.radians(argumento)), 9))
+                Tokens[index + 1] = ''  # Elimina el argumento procesado
+        Tokens = list(filter(None, Tokens))  # Filtra los elementos vacíos
+
 
     ##Usar numeros posteriores como argumentos en fucniones trigonometricas y radicación
 
