@@ -52,7 +52,7 @@ def Erase_All():
 def Calculate(expr):
     expr = expr.replace('x', '*')
 
-    Tokens = re.findall(r'[\d\.]+|[+*/-]|cos', expr)
+    Tokens = re.findall(r'[\d\.]+|[+*/-]|cos|:', expr)
 
     # fraccion Edin 
     while ':' in Tokens:
