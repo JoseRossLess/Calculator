@@ -41,14 +41,33 @@ def Erase_All():
     if len(current_text2) > 0:
         entry2.set(current_text[:0])
 
-def Equal():
+def division (a,b):
     try:
-        current_text = entry1.get()
-        result = eval(current_text.replace('÷', '/'))
-        entry2.set(str(result))
+        return a / b
+    except ZeroDivisionError:
+        return "Error: Division por cero" 
+    
+def Equal():
+    expression = entry1.get()
+    try:
+        if "÷" in expression:
+            nums = expression.split("÷")
+            result = division(float(nums[0]), float(nums[1]))  
+        elif "+" in expression:
+            nums = expression.split("+")
+            result = float(nums[0]) + float(nums[1])
+        else:
+            result = "error"   
+
+
+        entry2.set(f"{expression} = {result}")
+        entry1.set(str(result))
     except Exception as e:
-        entry2.set("Error")    
-          
+     entry2.set("Error")
+     entry1.set("0")    
+
+    
+    
 root = Tk()
 root.title("Calculadora")
 
