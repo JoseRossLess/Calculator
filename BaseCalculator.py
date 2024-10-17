@@ -36,29 +36,45 @@ def Erase_All():
 
 def Calculate(expr):
     
+    expr = expr.replace('x', '*')
 
-    # Encontrar fracciones unitarias 
-    Tokens = re.findall(r'\d+/\d+|[\d\.]+|[+*/-]', expr)
+    Tokens = re.findall(r'[\d\.]+|[+*/-]|:', expr)
+    while ':' in Tokens:
+        for index, funcion in enumerate (Tokens): # para recorrer la lista de tokens usando enumarete
+            if funcion in (':'):
+                numerador = float(Tokens[index - 1])
+                denominador = float(Tokens[index + 1])
+                resultado = round(numerador / denominador, 3)
 
-    result = ""
-    for token in Tokens:
-        if re.match(r'\d+/\d+', token):  # Si es una fracción
-            frac = Fraction(token)
-            # Mostrar el valor decimal
-            result += f"{float(frac):.3f}" 
-        else: 
-            result += token + " "
-    return result
+                Tokens[index - 1] = str(resultado)
+                Tokens[index] = ''
+                Tokens[index + 1] = ''
+                Tokens = list(filter(None, Tokens))
+                break
 
 
-def Operation(Sign):
-    ## Operar sumas, restas, multiplicación, etc.
-    return Sign[0]
+    ##Usar numeros posteriores como argumentos en fucniones trigonometricas y radicación
 
+    #45+8-8*5
+    def Operation(LisTokens):
+        
+        while '*' in LisTokens:
+            for index in range(len(LisTokens)):
+                if LisTokens[index] == '*':
+                    LisTokens[index - 1] = str(float(LisTokens[index - 1]) * float(LisTokens[index + 1]))
+                    del LisTokens [index:index + 2]
+                    break
+                
+                
+        ##Operar sumas, restas, multiplicación, etc. 
+
+        return LisTokens[0] if LisTokens else "0"
+
+    return Operation(Tokens)
 
 def Equal():
     current_text = entry1.get().strip()
-
+    
     try:
         resultado = Calculate(current_text)
     except Exception as e:
@@ -139,7 +155,7 @@ dropdown_button.bind("<Leave>", lambda e: dropdown_button.config(bg="#131313"))
 dropdown_button["menu"] = dropdown_menu
 
 Button_Craft(mainframe, "x²", lambda: button_click("^"), 3, 1)
-Button_Craft(mainframe, "/", lambda: button_click("/"), 3, 2)
+Button_Craft(mainframe, ":", lambda: button_click(":"), 3, 2)
 Button_Craft(mainframe, "÷", lambda: button_click("÷"), 3,3) 
 
 Button_Craft(mainframe, "7", lambda: button_click("7"), 4, 0)
@@ -161,6 +177,7 @@ Button_Craft(mainframe, "%", lambda: button_click("%"), 7, 0)
 Button_Craft(mainframe, "0", lambda: button_click("0"), 7, 1)
 Button_Craft(mainframe, ".", lambda: button_click("."), 7, 2)
 Button_Craft(mainframe, "=", Equal, 7, 3)
+
 
 root.bind("<Key>", Press_Key)
 
