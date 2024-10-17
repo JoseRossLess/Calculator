@@ -2,6 +2,7 @@ from tkinter import *
 from tkinter import ttk
 import math
 import re
+from fractions import Fraction 
 
 def button_click(value):
     current_text = entry1.get()
@@ -23,8 +24,23 @@ def Button_Erase():
             NewText = current_text[:-length]
             entry1.set(NewText)
             return
-    NewText = current_text[:-1]
-    entry1.set(NewText)
+    new_text = current_text[:-1]
+    entry1.set(new_text)
+        
+def Button_Erase_Entry():
+    current_text = entry1.get()
+    if len(current_text) > 0:
+        entry1.set("0")
+        
+def Erase_All():
+    current_text = entry1.get()
+    if len(current_text) > 0:
+        entry1.set("0")
+    current_text2 = entry2.get()
+    if len(current_text2) > 0:
+        entry2.set(current_text[:0])
+
+    entry2.set(current_text)
 
 def Button_Erase_Entry():
     entry1.set("0")
@@ -34,15 +50,28 @@ def Erase_All():
     entry2.set("")
 
 def Calculate(expr):
-
     expr = expr.replace('x', '*')
 
-    Tokens = re.findall(r'[\d\.]+|[+*/-]', expr)
+    Tokens = re.findall(r'[\d\.]+|[+*/-]|cos', expr)
+
+    # coseno daniel 
+    while 'cos' in Tokens:# este bucle se ba a ejecutar mientras la palabra while este en la lista de tokens
+        for index in range(len(Tokens)):  # este recorre cada uno de los tokens 
+            funcion = Tokens[index]
+            if funcion in ('cos',):  # No se elimina ningún if
+                argumento = float(Tokens[index + 1])
+                if funcion == 'cos':
+                # Calcula el coseno
+                    Tokens[index] = str(round(math.cos(math.radians(argumento)), 9))
+                Tokens[index + 1] = ''  # Elimina el argumento procesado
+        Tokens = list(filter(None, Tokens))  # Filtra los elementos vacíos
+
 
     ##Usar numeros posteriores como argumentos en fucniones trigonometricas y radicación
 
     #45+8-8*5
     def Operation(LisTokens):
+
         
         while '*' in LisTokens:
             for index in range(len(LisTokens)):
