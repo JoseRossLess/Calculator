@@ -50,7 +50,7 @@ def Erase_All():
     entry2.set("")
 
 def Calculate(expr):
-    expr = expr.replace('x', '*')
+    expr = expr.replace('÷', '/')
 
     Tokens = re.findall(r'[\d\.]+|[+*/-]|cos|:', expr)
 
@@ -86,7 +86,13 @@ def Calculate(expr):
     #45+8-8*5
     def Operation(LisTokens):
 
-        
+        while '/' in LisTokens:
+            for index in range(len(LisTokens)):
+                if LisTokens[index] == '/':
+                    LisTokens[index - 1] = str(float(LisTokens[index - 1]) / float(LisTokens[index + 1]))
+                    del LisTokens [index:index + 2]
+                    break
+
         while '*' in LisTokens:
             for index in range(len(LisTokens)):
                 if LisTokens[index] == '*':
