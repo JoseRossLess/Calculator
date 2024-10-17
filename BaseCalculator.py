@@ -50,16 +50,12 @@ def Erase_All():
     entry2.set("")
 
 def Calculate(expr):
-
-    
-    def Operation(Sign):
-
-        expr = expr.replace('x', '*')
+    expr = expr.replace('x', '*')
 
     Tokens = re.findall(r'[\d\.]+|[+*/-]|cos', expr)
     while 'cos' in Tokens:
         for index, funcion in enumerate (Tokens):
-            if funcion in ('cos', 'frac'):
+            if funcion in ('cos',):
                 argumento = float ( Tokens [index + 1])
                 if funcion == 'cos':
                     Tokens[index] = str(math.cos(math.radians(argumento))) 
