@@ -33,36 +33,14 @@ def Erase_All():
     entry1.set("0")
     entry2.set("")
         
-import re
+
 
 
 import re
 
 def Equal():
-    current_text = entry1.get()  # Obtiene el texto de entrada del usuario
-
-    try:
-       
-        expresion = current_text.strip()
-        
-        expresion = expresion.replace('x', '*').replace('÷', '/')
-        
-        numeros = re.split(r'-', expresion)  
-        
-        
-        numeros = [float(n) for n in numeros]
-        
-        
-        resultado = numeros[0]  
-        for i in range(1, len(numeros)):
-            resultado -= numeros[i]  
-        
-        
-        entry2.set(resultado)
-    
-    except Exception as e:
-        
-        entry2.set("Error")
+    current_text = entry1.get()
+    entry2.set(current_text)
 
 
 
