@@ -43,12 +43,25 @@ def Calculate(expr):
     ##Usar numeros posteriores como argumentos en fucniones trigonometricas y radicación
     
     def Operation(Sign):
-        
-        ##Operar sumas, restas, multiplicación, etc.
-        
-        return Sign[0]
 
-    return Operation(Tokens)
+    ex
+    pr = expr.replace('%', '*0.01')  # Convierte el porcentaje a multiplicación por 0.01
+
+    # Tokenizar la expresión
+    Tokens = re.findall(r'[\d\.]+|[+*/-]%', expr)  # Busca números y operadores
+
+    def Operation(Sign):
+        # Manejo de operaciones básicas
+        if len(Sign) == 3:  # Se espera tener un número, un operador, y otro número
+            if Sign[1] == '+':
+                return float(Sign[0]) + float(Sign[2])
+            elif Sign[1] == '-':
+                return float(Sign[0]) - float(Sign[2])
+            elif Sign[1] == '*':
+                return float(Sign[0]) * float(Sign[2])
+            elif Sign[1] == '/':
+                return float(Sign[0]) / float(Sign[2])
+        return Sign[0]  # Si solo hay un número, devuélvelo
 
 def Equal():
     current_text = entry1.get().strip()
@@ -60,6 +73,7 @@ def Equal():
 
     entry2.set(resultado)
 
+    
 def Press_Key (event):
     key = event.char
     if key.isdigit():
