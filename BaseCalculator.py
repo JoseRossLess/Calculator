@@ -47,6 +47,19 @@ def Calculate(expr):
         ##Operar sumas, restas, multiplicación, etc.
         
         return Sign[0]
+import re
+
+def Calculate(expr):
+    expr = expr.replace("÷", "/").replace("x", "*").replace("−", "-")
+    Tokens = re.findall(r'[\d\.]+|[+*/-]', expr)
+
+    def Operation(LisTokens):
+        while '+' in LisTokens:
+            index = LisTokens.index('+') 
+            result = float(LisTokens[index - 1]) + float(LisTokens[index + 1])
+            result = int(result) if result.is_integer() else round(result, 2)
+            LisTokens[index - 1:index + 2] = [str(result)]
+        return LisTokens[0] if LisTokens else "0"
 
     return Operation(Tokens)
 
