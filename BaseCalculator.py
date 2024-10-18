@@ -42,19 +42,6 @@ def Erase_All():
 
     entry2.set(current_text)
 
-   
-ops = ["2", "*", "3"]
-i = 1
-
-# Asegúrate de que los índices y conversiones sean correctos:
-try:
-    ops[i - 1] = str(float(ops[i - 1]) * float(ops[i + 1]))
-    del ops[i:i+2]  # Elimina los elementos usados
-except (IndexError, ValueError) as e:
-    print(f"Error: {e}")
-
-print(ops)  # Debería imprimir ['6.0']
-
 
 def Button_Erase_Entry():
     entry1.set("0")
@@ -66,7 +53,7 @@ def Erase_All():
 def Calculate(expr):
     expr = expr.replace('x', '*')
 
-    Tokens = re.findall(r'[\d\.]+|[+*/-]|cos|:', expr)
+    Tokens = re.findall(r'[\d\.]+|[+*/-]|cos|:|\**', expr)
 
     # fraccion Edin 
     while ':' in Tokens:
@@ -100,7 +87,15 @@ def Calculate(expr):
     #45+8-8*5
     def Operation(LisTokens):
 
-        
+    ##potenciacion osvaldo
+
+        while '**' in LisTokens:
+            for index in range(len(LisTokens)):
+                if LisTokens[index] == '**':
+                    LisTokens[index - 1] = str(float(LisTokens[index - 1]) ** float(LisTokens[index + 1]))
+                    del LisTokens [index:index + 2]
+                    break
+
         while '*' in LisTokens:
             for index in range(len(LisTokens)):
                 if LisTokens[index] == '*':
