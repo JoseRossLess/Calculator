@@ -27,64 +27,17 @@ def Button_Erase():
     entry1.set(NewText)
 
    
-    """Aplica las operaciones básicas incluyendo potenciación."""
-    b = operands.pop()
-    a = operands.pop()
-    if operator == "+":
-        return a + b
-    elif operator == "-":
-        return a - b
-    elif operator == "*":
-        return a * b
-    elif operator == "/":
-        return a / b
-    elif operator == "^":  # Implementación de la potenciación
-        return a ** b
+ops = ["2", "*", "3"]
+i = 1
 
-def precedence(operator):
-    """Define la precedencia de los operadores."""
-    if operator in ("+", "-"):
-        return 1
-    elif operator in ("*", "/"):
-        return 2
-    elif operator == "^":  # La potencia tiene mayor precedencia
-        return 3
-    return 0
+# Asegúrate de que los índices y conversiones sean correctos:
+try:
+    ops[i - 1] = str(float(ops[i - 1]) * float(ops[i + 1]))
+    del ops[i:i+2]  # Elimina los elementos usados
+except (IndexError, ValueError) as e:
+    print(f"Error: {e}")
 
-def process_expression(expression):
-    """Procesa la expresión aritmética respetando la precedencia de operadores."""
-    # Divide los números y operadores
-    tokens = re.findall(r"\d+\.?\d*|[+\-*/^]", expression)
-
-    # Pilas para operandos y operadores
-    operand_stack = []
-    operator_stack = []
-
-    for token in tokens:
-        if re.match(r"\d", token):  # Si es un número
-            operand_stack.append(float(token))  # Convierte a float
-        else:  # Si es un operador
-            while (operator_stack and precedence(operator_stack[-1]) >= precedence(token)):
-                operator = operator_stack.pop()
-                result = apply_operation(operand_stack, operator)
-                operand_stack.append(result)
-            operator_stack.append(token)
-
-    # Procesa los operadores restantes
-    while operator_stack:
-        operator = operator_stack.pop()
-        result = apply_operation(operand_stack, operator)
-        operand_stack.append(result)
-
-    return operand_stack[0]  # El resultado final estará en la cima de la pila
-
-def Equal():
-    current_text = entry1.get()  # Obtiene el texto de la entrada
-    try:
-        result = process_expression(current_text)  # Procesa la expresión
-        entry2.set(str(result))  # Muestra el resultado
-    except:
-        entry2.set("Error")  # Muestra un error en caso de fallo
+print(ops)  # Debería imprimir ['6.0']
 
 
 def Button_Erase_Entry():
