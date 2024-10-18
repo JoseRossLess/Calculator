@@ -55,16 +55,16 @@ def Calculate(expr):
     Tokens = re.findall(r'[\d\.]+|[+*/-]|cos', expr)
 
     # coseno daniel 
-    while 'cos' in Tokens:# este bucle se ba a ejecutar mientras la palabra while este en la lista de tokens
-        for index in range(len(Tokens)):  # este recorre cada uno de los tokens 
-            funcion = Tokens[index]
-            if funcion in ('cos',):  # No se elimina ningún if
-                argumento = float(Tokens[index + 1])
-                if funcion == 'cos':
-                # Calcula el coseno
-                    Tokens[index] = str(round(math.cos(math.radians(argumento)), 9))
-                Tokens[index + 1] = ''  # Elimina el argumento procesado
-        Tokens = list(filter(None, Tokens))  # Filtra los elementos vacíos
+    while 'cos' in Tokens:  # Ejecutar el bucle mientras haya un token llamado 'cos' en la lista Tokens
+        for index, token in enumerate(Tokens):
+            if token == 'cos':  # busca la función coseno 
+                siguiente_token = Tokens[index + 1]
+                if siguiente_token == '-' and index + 2 < len(Tokens):  # Si es un número negativo salata al siguente token
+                    argumento = float(Tokens[index + 1] + Tokens[index + 2])  # combina el signo y el número
+                    Tokens[index:index + 3] = [str(round(math.cos(math.radians(argumento)), 9))]  # Calculamos el coseno con el signo negativo
+                else:  # Si no es negativo
+                    argumento = float(siguiente_token)  # opera normalmente
+                    Tokens[index:index + 2] = [str(round(math.cos(math.radians(argumento)), 9))]  # Calculamos el coseno
 
 
     ##Usar numeros posteriores como argumentos en fucniones trigonometricas y radicación
