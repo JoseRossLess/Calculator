@@ -53,7 +53,7 @@ def Erase_All():
 def Calculate(expr):
     expr = expr.replace('x', '*')
 
-    Tokens = re.findall(r'[\d\.]+|[+*/-]|cos|:|\**', expr)
+    Tokens = re.findall(r'[\d\.]+|[+*/-]|\^|cos|:', expr)
 
     # fraccion Edin 
     while ':' in Tokens:
@@ -81,20 +81,23 @@ def Calculate(expr):
                 Tokens[index + 1] = ''  # Elimina el argumento procesado
         Tokens = list(filter(None, Tokens))  # Filtra los elementos vacíos
 
+    while '^' in Tokens:
+        for index in range(len(Tokens)):
+            if Tokens[index] == '^':
+                # Calcula la potencia entre el número anterior y el siguiente
+                Tokens[index - 1] = str(float(Tokens[index - 1]) ** float(Tokens[index + 1]))
+                # Elimina el operador y el segundo número procesado
+                del Tokens[index:index + 2]
+                break  # Reinicia el bucle para verificar si hay más potenciaciones
+
+    # Llamar a la función de
+
 
     ##Usar numeros posteriores como argumentos en fucniones trigonometricas y radicación
 
     #45+8-8*5
     def Operation(LisTokens):
 
-    ##potenciacion osvaldo
-
-        while '**' in LisTokens:
-            for index in range(len(LisTokens)):
-                if LisTokens[index] == '**':
-                    LisTokens[index - 1] = str(float(LisTokens[index - 1]) ** float(LisTokens[index + 1]))
-                    del LisTokens [index:index + 2]
-                    break
 
         while '*' in LisTokens:
             for index in range(len(LisTokens)):
