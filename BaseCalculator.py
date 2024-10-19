@@ -56,7 +56,7 @@ def Calculate(expr):
     Tokens = re.findall(r'[\d\.]+|[+*/-]|\^|cos|:', expr)
 
     # fraccion Edin 
-    while ':' in Tokens:
+    while ':' in Tokens: # Si encuentra :
         for index, funcion in enumerate (Tokens): # para recorrer la lista de tokens usando enumarete
             if funcion in (':'):
                 numerador = float(Tokens[index - 1])
