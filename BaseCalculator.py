@@ -52,7 +52,21 @@ def Erase_All():
 def Calculate(expr):
     expr = expr.replace('x', '*')
 
-    Tokens = re.findall(r'[\d\.]+|[+*/-]|cos', expr)
+    Tokens = re.findall(r'[\d\.]+|[+*/-]|cos|:', expr)
+
+    # fraccion Edin 
+    while ':' in Tokens:
+        for index, funcion in enumerate (Tokens): # para recorrer la lista de tokens usando enumarete
+            if funcion in (':'):
+                numerador = float(Tokens[index - 1])
+                denominador = float(Tokens[index + 1])
+                resultado = round(numerador / denominador, 3)
+
+                Tokens[index - 1] = str(resultado)
+                Tokens[index] = ''
+                Tokens[index + 1] = ''
+                Tokens = list(filter(None, Tokens))
+                break
 
     # coseno daniel 
     while 'cos' in Tokens:  # Ejecutar el bucle mientras haya un token llamado 'cos' en la lista Tokens
@@ -170,7 +184,7 @@ dropdown_button.bind("<Leave>", lambda e: dropdown_button.config(bg="#131313"))
 dropdown_button["menu"] = dropdown_menu
 
 Button_Craft(mainframe, "x²", lambda: button_click("^"), 3, 1)
-Button_Craft(mainframe, "1/3", lambda: button_click("1/3"), 3, 2)
+Button_Craft(mainframe, ":", lambda: button_click(":"), 3, 2)
 Button_Craft(mainframe, "÷", lambda: button_click("÷"), 3,3) 
 
 Button_Craft(mainframe, "7", lambda: button_click("7"), 4, 0)
