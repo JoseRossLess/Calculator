@@ -42,6 +42,7 @@ def Erase_All():
 
     entry2.set(current_text)
 
+
 def Button_Erase_Entry():
     entry1.set("0")
 
@@ -52,7 +53,7 @@ def Erase_All():
 def Calculate(expr):
     expr = expr.replace('x', '*')
 
-    Tokens = re.findall(r'[\d\.]+|[+*/-]|cos|:', expr)
+    Tokens = re.findall(r'[\d\.]+|[+*/-]|\^|cos|:', expr)
 
     # fraccion Edin 
     while ':' in Tokens:
@@ -80,13 +81,31 @@ def Calculate(expr):
                 Tokens[index + 1] = ''  # Elimina el argumento procesado
         Tokens = list(filter(None, Tokens))  # Filtra los elementos vacíos
 
+    # potenciacion Osvaldo
+
+    while '^' in Tokens:
+        for index in range(len(Tokens)):
+            if Tokens[index] == '^':
+                base = float(Tokens[index - 1]) if Tokens[index - 1] != '-' else -float(Tokens[index - 2])
+                exp = float(Tokens[index + 1]) if Tokens[index + 1] != '-' else -float(Tokens[index + 2])
+                Tokens[index - 1] = str(round(base ** exp, 9))
+                del Tokens[index:index + 2]
+                break 
+
+
+
+    # Llamar a la función de operaciones generales
+
+
+    # Llamar a la función de
+
 
     ##Usar numeros posteriores como argumentos en fucniones trigonometricas y radicación
 
     #45+8-8*5
     def Operation(LisTokens):
 
-        
+
         while '*' in LisTokens:
             for index in range(len(LisTokens)):
                 if LisTokens[index] == '*':
