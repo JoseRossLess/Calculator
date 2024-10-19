@@ -81,14 +81,21 @@ def Calculate(expr):
                 Tokens[index + 1] = ''  # Elimina el argumento procesado
         Tokens = list(filter(None, Tokens))  # Filtra los elementos vacíos
 
+    # potenciacion Osvaldo
+
     while '^' in Tokens:
         for index in range(len(Tokens)):
             if Tokens[index] == '^':
-                # Calcula la potencia entre el número anterior y el siguiente
-                Tokens[index - 1] = str(float(Tokens[index - 1]) ** float(Tokens[index + 1]))
-                # Elimina el operador y el segundo número procesado
+                base = float(Tokens[index - 1]) if Tokens[index - 1] != '-' else -float(Tokens[index - 2])
+                exp = float(Tokens[index + 1]) if Tokens[index + 1] != '-' else -float(Tokens[index + 2])
+                Tokens[index - 1] = str(round(base ** exp, 9))
                 del Tokens[index:index + 2]
-                break  # Reinicia el bucle para verificar si hay más potenciaciones
+                break 
+
+
+
+    # Llamar a la función de operaciones generales
+
 
     # Llamar a la función de
 
