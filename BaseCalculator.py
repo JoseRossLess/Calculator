@@ -2,6 +2,7 @@ from tkinter import *
 from tkinter import ttk
 import math
 import re
+from fractions import Fraction 
 
 def button_click(value):
     current_text = entry1.get()
@@ -23,8 +24,24 @@ def Button_Erase():
             NewText = current_text[:-length]
             entry1.set(NewText)
             return
-    NewText = current_text[:-1]
-    entry1.set(NewText)
+    new_text = current_text[:-1]
+    entry1.set(new_text)
+        
+def Button_Erase_Entry():
+    current_text = entry1.get()
+    if len(current_text) > 0:
+        entry1.set("0")
+        
+def Erase_All():
+    current_text = entry1.get()
+    if len(current_text) > 0:
+        entry1.set("0")
+    current_text2 = entry2.get()
+    if len(current_text2) > 0:
+        entry2.set(current_text[:0])
+
+    entry2.set(current_text)
+
 
 def Button_Erase_Entry():
     entry1.set("0")
@@ -33,30 +50,74 @@ def Erase_All():
     entry1.set("0")
     entry2.set("")
 
+def subtract(tokens):
+    while '-' in tokens:
+        for index, token in enumerate(tokens):
+            if token == '-':
+                # Restar dos números adyacentes
+                if index > 0:
+                    if tokens[index - 1] == '':
+                        continue
+                    result = float(tokens[index - 1]) - float(tokens[index + 1])
+                    tokens[index - 1] = str(result)
+                    del tokens[index:index + 2]
+                break
+    return tokens
+
+
 def Calculate(expr):
-
     expr = expr.replace('x', '*')
+    
+    # Tokenización de la expresión
+    tokens = re.findall(r'[\d\.]+|[+*/-]|\^|cos|:', expr)
 
-    Tokens = re.findall(r'[\d\.]+|[+*/-]', expr)
+    # Procesamiento de fracciones
+    while ':' in tokens:
+        for index, token in enumerate(tokens):
+            if token == ':':
+                numerador = float(tokens[index - 1])
+                denominador = float(tokens[index + 1])
+                resultado = round(numerador / denominador, 3)
 
-    ##Usar numeros posteriores como argumentos en fucniones trigonometricas y radicación
+                tokens[index - 1] = str(resultado)
+                tokens[index] = ''
+                tokens[index + 1] = ''
+                tokens = list(filter(None, tokens))
+                break
 
-    #45+8-8*5
-    def Operation(LisTokens):
-        
-        while '*' in LisTokens:
-            for index in range(len(LisTokens)):
-                if LisTokens[index] == '*':
-                    LisTokens[index - 1] = str(float(LisTokens[index - 1]) * float(LisTokens[index + 1]))
-                    del LisTokens [index:index + 2]
-                    break
-                
-                
-        ##Operar sumas, restas, multiplicación, etc. 
+    # Procesamiento del coseno
+    while 'cos' in tokens:
+        for index, token in enumerate(tokens):
+            if token == 'cos':
+                argumento = float(tokens[index + 1])
+                tokens[index:index + 2] = [str(round(math.cos(math.radians(argumento)), 9))]
 
-        return LisTokens[0] if LisTokens else "0"
+    # Procesamiento de potenciación
+    while '^' in tokens:
+        for index in range(len(tokens)):
+            if tokens[index] == '^':
+                base = float(tokens[index - 1])
+                exp = float(tokens[index + 1])
+                tokens[index - 1] = str(round(base ** exp, 9))
+                del tokens[index:index + 2]
+                break
 
-    return Operation(Tokens)
+  
+
+   #multiplicaciones
+    while '*' in tokens:
+        for index in range(len(tokens)):
+            if tokens[index] == '*':
+                tokens[index - 1] = str(float(tokens[index - 1]) * float(tokens[index + 1]))
+                del tokens[index:index + 2]
+                break
+
+ # Llamar a la función de resta
+    tokens = subtract(tokens)
+
+    # Devuelve el resultado
+    return tokens[0] if tokens else "0"
+
 
 def Equal():
     current_text = entry1.get().strip()
@@ -141,7 +202,7 @@ dropdown_button.bind("<Leave>", lambda e: dropdown_button.config(bg="#131313"))
 dropdown_button["menu"] = dropdown_menu
 
 Button_Craft(mainframe, "x²", lambda: button_click("^"), 3, 1)
-Button_Craft(mainframe, "1/3", lambda: button_click("1/3"), 3, 2)
+Button_Craft(mainframe, ":", lambda: button_click(":"), 3, 2)
 Button_Craft(mainframe, "÷", lambda: button_click("÷"), 3,3) 
 
 Button_Craft(mainframe, "7", lambda: button_click("7"), 4, 0)
