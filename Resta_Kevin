@@ -104,8 +104,8 @@ def Calculate(expr):
     while '^' in tokens:
         for index in range(len(tokens)):
             if tokens[index] == '^':
-                base = float(tokens[index - 1])
-                exp = float(tokens[index + 1])
+                base = float(tokens[index - 1]) if tokens[index - 1] != '-' else -float(tokens[index - 2])
+                exp = float(tokens[index + 1]) if tokens[index + 1] != '-' else -float(tokens[index + 2])
                 tokens[index - 1] = str(round(base ** exp, 9))
                 del tokens[index:index + 2]
                 break
