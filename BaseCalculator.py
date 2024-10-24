@@ -104,8 +104,8 @@ def Calculate(expr):
     while '^' in tokens:
         for index in range(len(tokens)):
             if tokens[index] == '^':
-                base = float(tokens[index - 1])
-                exp = float(tokens[index + 1])
+                base = float(tokens[index - 1]) if tokens[index - 1] != '-' else -float(tokens[index - 2])
+                exp = float(tokens[index + 1]) if tokens[index + 1] != '-' else -float(tokens[index + 2])
                 tokens[index - 1] = str(round(base ** exp, 9))
                 del tokens[index:index + 2]
                 break
@@ -119,12 +119,34 @@ def Calculate(expr):
                 tokens[index - 1] = str(float(tokens[index - 1]) * float(tokens[index + 1]))
                 del tokens[index:index + 2]
                 break
-
- # Llamar a la función de resta
+ # Procesamiento de restas
     tokens = subtract(tokens)
 
     # Devuelve el resultado
     return tokens[0] if tokens else "0"
+
+# Función de resta
+def subtract(tokens):
+    index = 0
+    while index < len(tokens):
+        token = tokens[index]
+
+        # Si el token es '-', verificamos si es una resta o un número negativo
+        if token == '-':
+            # Si el '-' está al inicio o precedido por un operador, es un número negativo
+            if index == 0 or tokens[index - 1] in ['+', '*', '/', '-']:
+                # Combina el '-' con el número siguiente
+                tokens[index:index + 2] = [str(float('-' + tokens[index + 1]))]
+            else:
+                # Es una operación de resta
+                result = float(tokens[index - 1]) - float(tokens[index + 1])
+                tokens[index - 1] = str(result)
+                del tokens[index:index + 2]
+        else:
+            index += 1
+
+    return tokens
+ 
 
 
 def Equal():
