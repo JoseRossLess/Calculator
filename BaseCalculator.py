@@ -2,6 +2,7 @@ from tkinter import *
 from tkinter import ttk
 import math
 import re
+from fractions import Fraction 
 
 def button_click(value):
     current_text = entry1.get()
@@ -23,8 +24,24 @@ def Button_Erase():
             NewText = current_text[:-length]
             entry1.set(NewText)
             return
-    NewText = current_text[:-1]
-    entry1.set(NewText)
+    new_text = current_text[:-1]
+    entry1.set(new_text)
+        
+def Button_Erase_Entry():
+    current_text = entry1.get()
+    if len(current_text) > 0:
+        entry1.set("0")
+        
+def Erase_All():
+    current_text = entry1.get()
+    if len(current_text) > 0:
+        entry1.set("0")
+    current_text2 = entry2.get()
+    if len(current_text2) > 0:
+        entry2.set(current_text[:0])
+
+    entry2.set(current_text)
+
 
 def Button_Erase_Entry():
     entry1.set("0")
@@ -34,31 +51,79 @@ def Erase_All():
     entry2.set("")
 
 def Calculate(expr):
+    expr = expr.replace('x', '*')
 
-    expresion = expresion.replace
-    ##En esta línea incluir los caracteres a cambiar
+    Tokens = re.findall(r'[\d\.]+|[+*/-]|\^|cos|:', expr)
 
-    Tokens = re.findall(r'[\d\.]+|[+*/-]|', expr)
+    # fraccion Edin 
+    while ':' in Tokens: # Si encuentra :
+        for index, funcion in enumerate (Tokens): # para recorrer la lista de tokens usando enumarete
+            if funcion in (':'):
+                numerador = float(Tokens[index - 1])
+                denominador = float(Tokens[index + 1])
+                resultado = round(numerador / denominador, 3)
+
+                Tokens[index - 1] = str(resultado)
+                Tokens[index] = ''
+                Tokens[index + 1] = ''
+                Tokens = list(filter(None, Tokens))
+                break
+
+    # coseno daniel 
+    while 'cos' in Tokens:  # Ejecutar el bucle mientras haya un token llamado 'cos' en la lista Tokens
+        for index, token in enumerate(Tokens):
+            if token == 'cos':  # busca la función coseno 
+                siguiente_token = Tokens[index + 1]
+                if siguiente_token == '-' and index + 2 < len(Tokens):  # Si es un número negativo salata al siguente token
+                    argumento = float(Tokens[index + 1] + Tokens[index + 2])  # combina el signo y el número
+                    Tokens[index:index + 3] = [str(round(math.cos(math.radians(argumento)), 9))]  # Calculamos el coseno con el signo negativo
+                else:  # Si no es negativo
+                    argumento = float(siguiente_token)  # opera normalmente
+                    Tokens[index:index + 2] = [str(round(math.cos(math.radians(argumento)), 9))]  # Calculamos el coseno
+
+    # potenciacion Osvaldo
+
+    while '^' in Tokens:
+        for index in range(len(Tokens)):
+            if Tokens[index] == '^':
+                base = float(Tokens[index - 1]) if Tokens[index - 1] != '-' else -float(Tokens[index - 2])
+                exp = float(Tokens[index + 1]) if Tokens[index + 1] != '-' else -float(Tokens[index + 2])
+                Tokens[index - 1] = str(round(base ** exp, 9))
+                del Tokens[index:index + 2]
+                break 
+
+
+
+    # Llamar a la función de operaciones generales
+
+
+    # Llamar a la función de
+
 
     ##Usar numeros posteriores como argumentos en fucniones trigonometricas y radicación
+
     
     def Operation(Sign):
         
         ##Operar sumas, restas, multiplicación, etc.
         
         return Sign[0]
-import re
 
-def Calculate(expr):
-    expr = expr.replace("÷", "/").replace("x", "*").replace("−", "-")
-    Tokens = re.findall(r'[\d\.]+|[+*/-]', expr)
 
+    #45+8-8*5
     def Operation(LisTokens):
-        while '+' in LisTokens:
-            index = LisTokens.index('+') 
-            result = float(LisTokens[index - 1]) + float(LisTokens[index + 1])
-            result = int(result) if result.is_integer() else round(result, 2)
-            LisTokens[index - 1:index + 2] = [str(result)]
+
+
+        while '*' in LisTokens:
+            for index in range(len(LisTokens)):
+                if LisTokens[index] == '*':
+                    LisTokens[index - 1] = str(float(LisTokens[index - 1]) * float(LisTokens[index + 1]))
+                    del LisTokens [index:index + 2]
+                    break
+                
+                
+        ##Operar sumas, restas, multiplicación, etc. 
+
         return LisTokens[0] if LisTokens else "0"
 
     return Operation(Tokens)
@@ -146,7 +211,7 @@ dropdown_button.bind("<Leave>", lambda e: dropdown_button.config(bg="#131313"))
 dropdown_button["menu"] = dropdown_menu
 
 Button_Craft(mainframe, "x²", lambda: button_click("^"), 3, 1)
-Button_Craft(mainframe, "1/3", lambda: button_click("1/3"), 3, 2)
+Button_Craft(mainframe, ":", lambda: button_click(":"), 3, 2)
 Button_Craft(mainframe, "÷", lambda: button_click("÷"), 3,3) 
 
 Button_Craft(mainframe, "7", lambda: button_click("7"), 4, 0)
