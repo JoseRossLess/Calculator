@@ -50,87 +50,11 @@ def Erase_All():
     entry1.set("0")
     entry2.set("")
 
-def subtract(tokens):
-    index = 0
-    while index < len(tokens):
-        token = tokens[index]
-
-        # Si el token es '-', verificamos si es una resta o un número negativo
-        if token == '-':
-            # Si el '-' está al inicio o precedido por un operador, es un número negativo
-            if index == 0 or tokens[index - 1] in ['+', '*', '/', '-']:
-                # Combina el '-' con el número siguiente
-                tokens[index:index + 2] = [str(float('-' + tokens[index + 1]))]
-            else:
-                # Es una operación de resta
-                result = float(tokens[index - 1]) - float(tokens[index + 1])
-                tokens[index - 1] = str(result)
-                del tokens[index:index + 2]
-        else:
-            index += 1
-
-    return tokens
-
-
-
-def Calculate(expr):
-    expr = expr.replace('x', '*')
-    
-    # Tokenización de la expresión
-    tokens = re.findall(r'[\d\.]+|[+*/-]|\^|cos|:', expr)
-
-    # Procesamiento de fracciones
-    while ':' in tokens:
-        for index, token in enumerate(tokens):
-            if token == ':':
-                numerador = float(tokens[index - 1])
-                denominador = float(tokens[index + 1])
-                resultado = round(numerador / denominador, 3)
-
-                tokens[index - 1] = str(resultado)
-                tokens[index] = ''
-                tokens[index + 1] = ''
-                tokens = list(filter(None, tokens))
-                break
-
-    # Procesamiento del coseno
-    while 'cos' in tokens:
-        for index, token in enumerate(tokens):
-            if token == 'cos':
-                argumento = float(tokens[index + 1])
-                tokens[index:index + 2] = [str(round(math.cos(math.radians(argumento)), 9))]
-
-    # Procesamiento de potenciación
-    while '^' in tokens:
-        for index in range(len(tokens)):
-            if tokens[index] == '^':
-                base = float(tokens[index - 1]) if tokens[index - 1] != '-' else -float(tokens[index - 2])
-                exp = float(tokens[index + 1]) if tokens[index + 1] != '-' else -float(tokens[index + 2])
-                tokens[index - 1] = str(round(base ** exp, 9))
-                del tokens[index:index + 2]
-                break
-
-  
-
-   #multiplicaciones
-    while '*' in tokens:
-        for index in range(len(tokens)):
-            if tokens[index] == '*':
-                tokens[index - 1] = str(float(tokens[index - 1]) * float(tokens[index + 1]))
-                del tokens[index:index + 2]
-                break
- # Procesamiento de restas
-    tokens = subtract(tokens)
-
-    # Devuelve el resultado
-    return tokens[0] if tokens else "0"
-
 # Función de resta
 def subtract(tokens):
     index = 0
     while index < len(tokens):
         token = tokens[index]
-
         # Si el token es '-', verificamos si es una resta o un número negativo
         if token == '-':
             # Si el '-' está al inicio o precedido por un operador, es un número negativo
@@ -144,9 +68,79 @@ def subtract(tokens):
                 del tokens[index:index + 2]
         else:
             index += 1
-
     return tokens
- 
+
+def Calculate(expr):
+    expr = expr.replace('x', '*')
+
+    Tokens = re.findall(r'[\d\.]+|[+*/-]|\^|cos|:', expr)
+
+    # fraccion Edin 
+    while ':' in Tokens: # Si encuentra :
+        for index, funcion in enumerate (Tokens): # para recorrer la lista de tokens usando enumarete
+            if funcion in (':'):
+                numerador = float(Tokens[index - 1])
+                denominador = float(Tokens[index + 1])
+                resultado = round(numerador / denominador, 3)
+
+                Tokens[index - 1] = str(resultado)
+                Tokens[index] = ''
+                Tokens[index + 1] = ''
+                Tokens = list(filter(None, Tokens))
+                break
+
+    # coseno daniel 
+    while 'cos' in Tokens:# este bucle se ba a ejecutar mientras la palabra while este en la lista de tokens
+        for index in range(len(Tokens)):  # este recorre cada uno de los tokens 
+            funcion = Tokens[index]
+            if funcion in ('cos',):  # No se elimina ningún if
+                argumento = float(Tokens[index + 1])
+                if funcion == 'cos':
+                # Calcula el coseno
+                    Tokens[index] = str(round(math.cos(math.radians(argumento)), 9))
+                Tokens[index + 1] = ''  # Elimina el argumento procesado
+        Tokens = list(filter(None, Tokens))  # Filtra los elementos vacíos
+
+    # potenciacion Osvaldo
+
+    while '^' in Tokens:
+        for index in range(len(Tokens)):
+            if Tokens[index] == '^':
+                base = float(Tokens[index - 1]) if Tokens[index - 1] != '-' else -float(Tokens[index - 2])
+                exp = float(Tokens[index + 1]) if Tokens[index + 1] != '-' else -float(Tokens[index + 2])
+                Tokens[index - 1] = str(round(base ** exp, 9))
+                del Tokens[index:index + 2]
+                break 
+
+
+
+    # Llamar a la función de operaciones generales
+
+
+    # Llamar a la función de
+
+
+    ##Usar numeros posteriores como argumentos en fucniones trigonometricas y radicación
+
+    #45+8-8*5
+    def Operation(LisTokens):
+
+
+        while '*' in LisTokens:
+            for index in range(len(LisTokens)):
+                if LisTokens[index] == '*':
+                    LisTokens[index - 1] = str(float(LisTokens[index - 1]) * float(LisTokens[index + 1]))
+                    del LisTokens [index:index + 2]
+                    break
+                
+       # Se realiza la Resta
+        LisTokens = subtract(LisTokens)
+                                       
+        ##Operar sumas, restas, multiplicación, etc. 
+
+        return LisTokens[0] if LisTokens else "0"
+
+    return Operation(Tokens)
 
 
 def Equal():
