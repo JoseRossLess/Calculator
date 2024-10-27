@@ -42,37 +42,6 @@ def Erase_All():
 
     entry2.set(current_text)
 
-<<<<<<< HEAD
-def raiz_cuadrada(numero):
-    """Calcula la raíz cuadrada de un número."""
-    if numero < 0:
-        return "Error: No se puede calcular la raíz cuadrada de un número negativo."
-    return math.sqrt(numero)
-
-def menu():
-    """Muestra el menú de opciones."""
-    print("Seleccione una opción:")
-    print("1. Calcular la raíz cuadrada")
-    print("2. Salir")
-
-def main():
-    while True:
-        menu()
-        opcion = input("Ingrese su opción: ")
-
-        if opcion == '1':
-            numero = float(input("Ingrese un número: "))
-            resultado = raiz_cuadrada(numero)
-            print(f"La raíz cuadrada de {numero} es: {resultado}")
-        elif opcion == '2':
-            print("Saliendo del programa. ¡Hasta luego!")
-            break
-        else:
-            print("Opción no válida. Por favor, intente de nuevo.")
-
-if 'name'== "main":
-    main()
-=======
 
 def Button_Erase_Entry():
     entry1.set("0")
@@ -84,7 +53,7 @@ def Erase_All():
 def Calculate(expr):
     expr = expr.replace('x', '*')
 
-    Tokens = re.findall(r'[\d\.]+|[+*/-]|\^|cos|:', expr)
+    Tokens = re.findall(r'[\d\.]+|[+*/-]|\^|cos|√|:', expr) 
 
     # fraccion Edin 
     while ':' in Tokens: # Si encuentra :
@@ -123,6 +92,13 @@ def Calculate(expr):
                 del Tokens[index:index + 2]
                 break 
 
+    #Raiz Luisa
+    while '√' in Tokens: # Nombra a la funcion que corresponde en el listado 
+        for idx, elemento in enumerate(Tokens): 
+            if elemento == '√': #Busca la funcion
+                siguiente_elemento = Tokens[idx + 1] 
+                razon = float(siguiente_elemento)
+                Tokens[idx:idx + 2] = [str(round(math.sqrt(razon), 9))] #Formula para realizar la raiz
 
 
     # Llamar a la función de operaciones generales
@@ -186,7 +162,6 @@ def Button_Craft(parent, text, command, row, col, rowspan=1, colspan=1, bg="#131
     button.bind("<Leave>", lambda e: button.config(bg=bg))
     
     return button
->>>>>>> main
 
 root = Tk()
 root.configure(bg="#f7f4f4")
