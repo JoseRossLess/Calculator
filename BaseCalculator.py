@@ -124,6 +124,17 @@ def Calculate(expr):
                 
         ##Operar sumas, restas, multiplicación, etc. 
 
+        while '+' in LisTokens:
+           for index in range(len(LisTokens)):
+              if LisTokens[index] == '+':
+               if index > 0 and index < len(LisTokens) - 1:
+                
+                LisTokens[index - 1] = str(float(LisTokens[index - 1]) + float(LisTokens[index + 1]))
+                
+                
+                del LisTokens[index:index + 2]
+                break
+
         return LisTokens[0] if LisTokens else "0"
 
     return Operation(Tokens)
