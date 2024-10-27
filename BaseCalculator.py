@@ -56,6 +56,7 @@ def subtract(tokens):
     return tokens
 
 def Calculate(expr):
+
     global Last_Result
     
     if "Ans" in expr:
@@ -63,6 +64,7 @@ def Calculate(expr):
     
     expr = expr.replace('x', '*')
 
+    expr = expr.replace('÷', '/')
     Tokens = re.findall(r'[\d\.]+|[+*/-]|\^|cos|√|:', expr) 
 
     # fraccion Edin 
@@ -122,13 +124,18 @@ def Calculate(expr):
 
     #45+8-8*5
     def Operation(LisTokens):
-        
-        while '*' in LisTokens:
-            for index in range(len(LisTokens)):
-                if LisTokens[index] == '*':
-                    LisTokens[index - 1] = str(float(LisTokens[index - 1]) * float(LisTokens[index + 1]))
-                    del LisTokens [index:index + 2]
+#Jeremias Division Combinada Con Multiplicacion 
+        while '*' in LisTokens or '/' in LisTokens:
+            for i in range(len(LisTokens)):
+                if LisTokens[i] == '*':
+                    LisTokens[i - 1] = str(float(LisTokens[i - 1]) * float(LisTokens[i + 1]))
+                    del LisTokens[i:i + 2]
                     break
+                elif LisTokens[i] == '/':
+                        LisTokens[i - 1] = str(float(LisTokens[i - 1]) / float(LisTokens[i + 1]))
+                        del LisTokens[i:i + 2]
+                        break
+
                 
 
 
