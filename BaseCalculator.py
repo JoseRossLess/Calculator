@@ -4,16 +4,23 @@ import math
 import re
 from fractions import Fraction 
 
+DoneOp = False
 def button_click(value):
-    current_text = entry1.get()
-    if current_text == "0":
-        entry1.set(value)
+    global DoneOp
+    # Si se ha realizado una operación, borra entry1 antes de agregar un nuevo valor
+    if DoneOp:
+        entry1.set(value)  # Empieza de nuevo con el nuevo número
+        DoneOp = False  # Reinicia la variable
     else:
-        entry1.set(current_text + value)
-
+        # Solo añade el valor al entry1
+        if entry1.get() == "0":
+            entry1.set(value)
+        else:
+            entry1.set(entry1.get() + value)
 def Button_Erase():
     current_text = entry1.get()
     sequences = {
+        "Ans": len("Ans"),
         "sin": len("sin"),
         "cos": len("cos"),
         "tan": len("tan"),
@@ -26,29 +33,8 @@ def Button_Erase():
             return
     new_text = current_text[:-1]
     entry1.set(new_text)
-        
-def Button_Erase_Entry():
-    current_text = entry1.get()
-    if len(current_text) > 0:
-        entry1.set("0")
-        
-def Erase_All():
-    current_text = entry1.get()
-    if len(current_text) > 0:
-        entry1.set("0")
-    current_text2 = entry2.get()
-    if len(current_text2) > 0:
-        entry2.set(current_text[:0])
 
-    entry2.set(current_text)
-
-
-def Button_Erase_Entry():
-    entry1.set("0")
-
-def Erase_All():
-    entry1.set("0")
-    entry2.set("")
+Last_Result = None
 
 def subtract(tokens):
     index = 0
@@ -70,6 +56,11 @@ def subtract(tokens):
     return tokens
 
 def Calculate(expr):
+    global Last_Result
+    
+    if "Ans" in expr:
+        expr = expr.replace("Ans", str(Last_Result) if Last_Result is not None else "0")
+    
     expr = expr.replace('x', '*')
 
     Tokens = re.findall(r'[\d\.]+|[+*/-]|\^|cos|:', expr)
@@ -124,8 +115,7 @@ def Calculate(expr):
 
     #45+8-8*5
     def Operation(LisTokens):
-
-
+        
         while '*' in LisTokens:
             for index in range(len(LisTokens)):
                 if LisTokens[index] == '*':
@@ -134,7 +124,9 @@ def Calculate(expr):
                     break
                 
 
+
         LisTokens = subtract(LisTokens)
+
 
         ##Operar sumas, restas, multiplicación, etc. 
 
@@ -143,21 +135,29 @@ def Calculate(expr):
     return Operation(Tokens)
 
 def Equal():
+    global Last_Result, Display_Result, DoneOp
+    
     current_text = entry1.get().strip()
     
     try:
-        resultado = Calculate(current_text)
+        Result = Calculate(current_text)
+        Last_Result = float(Result)
+        DoneOp = True
+        Display_Result = True  # Marca que el último resultado está disponible
     except Exception as e:
-        resultado = "Error"
+        Result = "Syntax Error"
+        Last_Result = None
+        Display_Result = False
 
-    entry2.set(resultado)
+    entry2.set(Result)
+
 
 def Press_Key(event):
     key = event.char
     if key.isdigit():
         button_click(key)
-    elif key in ['+', '-', 'x', '÷']:
-        button_click(key.replace('x', '*').replace('÷', '/'))  # Cambiar x y ÷ a * y /
+    elif key in ['+', '-', '*', '/']:
+        button_click(key.replace('*', 'x').replace('/', '÷'))  # Cambiar x y ÷ a * y /
     elif key == '.':
         button_click('.')
     elif key == '\r':
@@ -178,6 +178,20 @@ def Button_Craft(parent, text, command, row, col, rowspan=1, colspan=1, bg="#131
     
     return button
 
+button_state = "CE"  # Corrige el nombre de la variable
+
+def Erase_Entrys():
+    global button_state
+    if button_state == 'CE':
+        entry1.set("0")  # Borra solo entry1
+        button_state = "C"  # Actualiza el estado
+        Button_EraseEntry.config(text='C')  # Cambia el texto a 'C'
+    else:
+        entry1.set("0")  # Borra entry1
+        entry2.set("")    # Borra entry2
+        button_state = "CE"  # Actualiza el estado
+        Button_EraseEntry.config(text='CE')  # Cambia el texto a 'CE'
+        
 root = Tk()
 root.configure(bg="#f7f4f4")
 root.title("Calculadora")
@@ -204,8 +218,8 @@ label_entry2 = Label(mainframe, textvariable=entry2, anchor='e', font=("Verdana"
 label_entry2.grid(column=0, row=1, columnspan=4, sticky=(N, S, E, W))
 
 Button_Craft(mainframe, "√", lambda: button_click("√"), 2, 0)
-Button_Craft(mainframe, "CE", Button_Erase_Entry, 2, 1)
-Button_Craft(mainframe, "C", Erase_All, 2, 2)
+Button_Craft(mainframe, "Ans", lambda: button_click ("Ans"), 2, 1)
+Button_EraseEntry = Button_Craft(mainframe, "CE", Erase_Entrys, 2, 2)
 Button_Craft(mainframe, "←", Button_Erase, 2, 3)
 
 dropdown_button = Menubutton(mainframe, text="Trig.", relief="flat", font=('Segoe UI', 18), bg="#131313", fg="#ffffff")
