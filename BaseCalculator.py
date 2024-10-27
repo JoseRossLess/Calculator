@@ -86,11 +86,13 @@ def Calculate(expr):
     #45+8-8*5
     def Operation(LisTokens):
 
+             #Division Jeremias
         while '/' in LisTokens:
             for index in range(len(LisTokens)):
                 if LisTokens[index] == '/':
-                    LisTokens[index - 1] = str(float(LisTokens[index - 1]) / float(LisTokens[index + 1]))
-                    del LisTokens [index:index + 2]
+                    resultado = round(float(LisTokens[index - 1]) / float(LisTokens[index + 1]), 9)
+                    LisTokens[index - 1] = str(resultado)
+                    del LisTokens[index:index + 2]
                     break
 
         while '*' in LisTokens:
