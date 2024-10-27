@@ -102,12 +102,6 @@ def Calculate(expr):
 
     ##Usar numeros posteriores como argumentos en fucniones trigonometricas y radicación
 
-    
-    def Operation(Sign):
-        
-        ##Operar sumas, restas, multiplicación, etc.
-        
-        return Sign[0]
 
 
     #45+8-8*5
