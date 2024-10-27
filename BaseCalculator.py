@@ -124,7 +124,17 @@ def Calculate(expr):
 
     #45+8-8*5
     def Operation(LisTokens):
-
+#Jeremias Division Combinada Con Multiplicacion 
+        while '*' in LisTokens or '/' in LisTokens:
+            for i in range(len(LisTokens)):
+                if LisTokens[i] == '*':
+                    LisTokens[i - 1] = str(float(LisTokens[i - 1]) * float(LisTokens[i + 1]))
+                    del LisTokens[i:i + 2]
+                    break
+                elif LisTokens[i] == '/':
+                        LisTokens[i - 1] = str(float(LisTokens[i - 1]) / float(LisTokens[i + 1]))
+                        del LisTokens[i:i + 2]
+                        break
 
                 
 
