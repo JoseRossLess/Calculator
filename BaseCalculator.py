@@ -51,6 +51,15 @@ def subtract(tokens):
                 result = float(tokens[index - 1]) - float(tokens[index + 1])
                 tokens[index - 1] = str(result)
                 del tokens[index:index + 2]
+
+
+        if token == '+':
+            if index == 0 or tokens[index - 1] in ['+', '-', '*', '/']:
+                tokens[index:index + 2] = [str(float(tokens[index + 1]))] 
+            else:
+                result = float(tokens[index - 1]) + float(tokens[index + 1])
+                tokens[index - 1] = str(result)
+                del tokens[index:index + 2]
         else:
             index += 1
     return tokens
