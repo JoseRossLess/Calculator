@@ -87,20 +87,17 @@ def Calculate(expr):
     def Operation(LisTokens):
 
              #Division Jeremias
-        while '/' in LisTokens:
-            for index in range(len(LisTokens)):
-                if LisTokens[index] == '/':
-                    resultado = round(float(LisTokens[index - 1]) / float(LisTokens[index + 1]), 9)
-                    LisTokens[index - 1] = str(resultado)
-                    del LisTokens[index:index + 2]
+        while '*' in LisTokens or '/' in LisTokens:
+            for i in range(len(LisTokens)):
+                if LisTokens[i] == '*':
+                    LisTokens[i - 1] = str(float(LisTokens[i - 1]) * float(LisTokens[i + 1]))
+                    del LisTokens[i:i + 2]
+                    break
+                elif LisTokens[i] == '/':
+                    LisTokens[i - 1] = str(float(LisTokens[i - 1]) / float(LisTokens[i + 1]))
+                    del LisTokens[i:i + 2]
                     break
 
-        while '*' in LisTokens:
-            for index in range(len(LisTokens)):
-                if LisTokens[index] == '*':
-                    LisTokens[index - 1] = str(float(LisTokens[index - 1]) * float(LisTokens[index + 1]))
-                    del LisTokens [index:index + 2]
-                    break
                 
                 
         ##Operar sumas, restas, multiplicación, etc. 
