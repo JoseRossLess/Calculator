@@ -57,6 +57,7 @@ def subtract(tokens):
     return tokens
 
 def Calculate(expr):
+
     global Last_Result
     
     if "Ans" in expr:
@@ -65,7 +66,8 @@ def Calculate(expr):
     expr = expr.replace('x', '*')
     expr = expr.replace('÷', '/')
 
-    Tokens = re.findall(r'[\d\.]+|[+*/-]|\^|cos|:', expr)
+    expr = expr.replace('÷', '/')
+    Tokens = re.findall(r'[\d\.]+|[+*/-]|\^|cos|√|:', expr) 
 
     # fraccion Edin 
     while ':' in Tokens: # Si encuentra :
@@ -105,6 +107,13 @@ def Calculate(expr):
                 del Tokens[index:index + 2]
                 break 
 
+    #Raiz Luisa
+    while '√' in Tokens: # Nombra a la funcion que corresponde en el listado 
+        for idx, elemento in enumerate(Tokens): 
+            if elemento == '√': #Busca la funcion
+                siguiente_elemento = Tokens[idx + 1] 
+                razon = float(siguiente_elemento)
+                Tokens[idx:idx + 2] = [str(round(math.sqrt(razon), 9))] #Formula para realizar la raiz
 
 
     # Llamar a la función de operaciones generales
@@ -117,7 +126,11 @@ def Calculate(expr):
 
     #45+8-8*5
     def Operation(LisTokens):
+
         
+
+#Jeremias Division Combinada Con Multiplicacion 
+
         while '*' in LisTokens or '/' in LisTokens:
             for i in range(len(LisTokens)):
                 if LisTokens[i] == '*':
@@ -125,9 +138,10 @@ def Calculate(expr):
                     del LisTokens[i:i + 2]
                     break
                 elif LisTokens[i] == '/':
-                    LisTokens[i - 1] = str(float(LisTokens[i - 1]) / float(LisTokens[i + 1]))
-                    del LisTokens[i:i + 2]
-                    break
+                        LisTokens[i - 1] = str(float(LisTokens[i - 1]) / float(LisTokens[i + 1]))
+                        del LisTokens[i:i + 2]
+                        break
+
                 
 
 
