@@ -4,16 +4,23 @@ import math
 import re
 from fractions import Fraction 
 
+DoneOp = False
 def button_click(value):
-    current_text = entry1.get()
-    if current_text == "0":
-        entry1.set(value)
+    global DoneOp
+    # Si se ha realizado una operación, borra entry1 antes de agregar un nuevo valor
+    if DoneOp:
+        entry1.set(value)  # Empieza de nuevo con el nuevo número
+        DoneOp = False  # Reinicia la variable
     else:
-        entry1.set(current_text + value)
-
+        # Solo añade el valor al entry1
+        if entry1.get() == "0":
+            entry1.set(value)
+        else:
+            entry1.set(entry1.get() + value)
 def Button_Erase():
     current_text = entry1.get()
     sequences = {
+        "Ans": len("Ans"),
         "sin": len("sin"),
         "cos": len("cos"),
         "tan": len("tan"),
@@ -26,36 +33,42 @@ def Button_Erase():
             return
     new_text = current_text[:-1]
     entry1.set(new_text)
-        
-def Button_Erase_Entry():
-    current_text = entry1.get()
-    if len(current_text) > 0:
-        entry1.set("0")
-        
-def Erase_All():
-    current_text = entry1.get()
-    if len(current_text) > 0:
-        entry1.set("0")
-    current_text2 = entry2.get()
-    if len(current_text2) > 0:
-        entry2.set(current_text[:0])
 
-    entry2.set(current_text)
+Last_Result = None
 
-def Button_Erase_Entry():
-    entry1.set("0")
-
-def Erase_All():
-    entry1.set("0")
-    entry2.set("")
+def subtract(tokens):
+    index = 0
+    while index < len(tokens):
+        token = tokens[index]
+        # Si el token es '-', verificamos si es una resta o un número negativo
+        if token == '-':
+            # Si el '-' está al inicio o precedido por un operador, es un número negativo
+            if index == 0 or tokens[index - 1] in ['+', '*', '/', '-']:
+                # Combina el '-' con el número siguiente
+                tokens[index:index + 2] = [str(float('-' + tokens[index + 1]))]
+            else:
+                # Es una operación de resta
+                result = float(tokens[index - 1]) - float(tokens[index + 1])
+                tokens[index - 1] = str(result)
+                del tokens[index:index + 2]
+        else:
+            index += 1
+    return tokens
 
 def Calculate(expr):
-    expr = expr.replace('÷', '/')
 
-    Tokens = re.findall(r'[\d\.]+|[+*/-]|cos|:', expr)
+    global Last_Result
+    
+    if "Ans" in expr:
+        expr = expr.replace("Ans", str(Last_Result) if Last_Result is not None else "0")
+    
+    expr = expr.replace('x', '*')
+
+    expr = expr.replace('÷', '/')
+    Tokens = re.findall(r'[\d\.]+|[+*/-]|\^|cos|√|:', expr) 
 
     # fraccion Edin 
-    while ':' in Tokens:
+    while ':' in Tokens: # Si encuentra :
         for index, funcion in enumerate (Tokens): # para recorrer la lista de tokens usando enumarete
             if funcion in (':'):
                 numerador = float(Tokens[index - 1])
@@ -69,16 +82,42 @@ def Calculate(expr):
                 break
 
     # coseno daniel 
-    while 'cos' in Tokens:# este bucle se ba a ejecutar mientras la palabra while este en la lista de tokens
-        for index in range(len(Tokens)):  # este recorre cada uno de los tokens 
-            funcion = Tokens[index]
-            if funcion in ('cos',):  # No se elimina ningún if
-                argumento = float(Tokens[index + 1])
-                if funcion == 'cos':
-                # Calcula el coseno
-                    Tokens[index] = str(round(math.cos(math.radians(argumento)), 9))
-                Tokens[index + 1] = ''  # Elimina el argumento procesado
-        Tokens = list(filter(None, Tokens))  # Filtra los elementos vacíos
+    while 'cos' in Tokens:  # Ejecutar el bucle mientras haya un token llamado 'cos' en la lista Tokens
+        for index, token in enumerate(Tokens):
+            if token == 'cos':  # busca la función coseno 
+                siguiente_token = Tokens[index + 1]
+                if siguiente_token == '-' and index + 2 < len(Tokens):  # Si es un número negativo salata al siguente token
+                    argumento = float(Tokens[index + 1] + Tokens[index + 2])  # combina el signo y el número
+                    Tokens[index:index + 3] = [str(round(math.cos(math.radians(argumento)), 9))]  # Calculamos el coseno con el signo negativo
+                else:  # Si no es negativo
+                    argumento = float(siguiente_token)  # opera normalmente
+                    Tokens[index:index + 2] = [str(round(math.cos(math.radians(argumento)), 9))]  # Calculamos el coseno
+
+
+    # potenciacion Osvaldo
+
+    while '^' in Tokens:
+        for index in range(len(Tokens)):
+            if Tokens[index] == '^':
+                base = float(Tokens[index - 1]) if Tokens[index - 1] != '-' else -float(Tokens[index - 2])
+                exp = float(Tokens[index + 1]) if Tokens[index + 1] != '-' else -float(Tokens[index + 2])
+                Tokens[index - 1] = str(round(base ** exp, 9))
+                del Tokens[index:index + 2]
+                break 
+
+    #Raiz Luisa
+    while '√' in Tokens: # Nombra a la funcion que corresponde en el listado 
+        for idx, elemento in enumerate(Tokens): 
+            if elemento == '√': #Busca la funcion
+                siguiente_elemento = Tokens[idx + 1] 
+                razon = float(siguiente_elemento)
+                Tokens[idx:idx + 2] = [str(round(math.sqrt(razon), 9))] #Formula para realizar la raiz
+
+
+    # Llamar a la función de operaciones generales
+
+
+    # Llamar a la función de
 
 
     ##Usar numeros posteriores como argumentos en fucniones trigonometricas y radicación
@@ -86,20 +125,13 @@ def Calculate(expr):
     #45+8-8*5
     def Operation(LisTokens):
 
-             #Division Jeremias
-        while '*' in LisTokens or '/' in LisTokens:
-            for i in range(len(LisTokens)):
-                if LisTokens[i] == '*':
-                    LisTokens[i - 1] = str(float(LisTokens[i - 1]) * float(LisTokens[i + 1]))
-                    del LisTokens[i:i + 2]
-                    break
-                elif LisTokens[i] == '/':
-                    LisTokens[i - 1] = str(float(LisTokens[i - 1]) / float(LisTokens[i + 1]))
-                    del LisTokens[i:i + 2]
-                    break
 
                 
-                
+
+
+        LisTokens = subtract(LisTokens)
+
+
         ##Operar sumas, restas, multiplicación, etc. 
 
         return LisTokens[0] if LisTokens else "0"
@@ -107,21 +139,29 @@ def Calculate(expr):
     return Operation(Tokens)
 
 def Equal():
+    global Last_Result, Display_Result, DoneOp
+    
     current_text = entry1.get().strip()
     
     try:
-        resultado = Calculate(current_text)
+        Result = Calculate(current_text)
+        Last_Result = float(Result)
+        DoneOp = True
+        Display_Result = True  # Marca que el último resultado está disponible
     except Exception as e:
-        resultado = "Error"
+        Result = "Syntax Error"
+        Last_Result = None
+        Display_Result = False
 
-    entry2.set(resultado)
+    entry2.set(Result)
+
 
 def Press_Key(event):
     key = event.char
     if key.isdigit():
         button_click(key)
-    elif key in ['+', '-', 'x', '÷']:
-        button_click(key.replace('x', '*').replace('÷', '/'))  # Cambiar x y ÷ a * y /
+    elif key in ['+', '-', '*', '/']:
+        button_click(key.replace('*', 'x').replace('/', '÷'))  # Cambiar x y ÷ a * y /
     elif key == '.':
         button_click('.')
     elif key == '\r':
@@ -142,6 +182,20 @@ def Button_Craft(parent, text, command, row, col, rowspan=1, colspan=1, bg="#131
     
     return button
 
+button_state = "CE"  # Corrige el nombre de la variable
+
+def Erase_Entrys():
+    global button_state
+    if button_state == 'CE':
+        entry1.set("0")  # Borra solo entry1
+        button_state = "C"  # Actualiza el estado
+        Button_EraseEntry.config(text='C')  # Cambia el texto a 'C'
+    else:
+        entry1.set("0")  # Borra entry1
+        entry2.set("")    # Borra entry2
+        button_state = "CE"  # Actualiza el estado
+        Button_EraseEntry.config(text='CE')  # Cambia el texto a 'CE'
+        
 root = Tk()
 root.configure(bg="#f7f4f4")
 root.title("Calculadora")
@@ -168,8 +222,8 @@ label_entry2 = Label(mainframe, textvariable=entry2, anchor='e', font=("Verdana"
 label_entry2.grid(column=0, row=1, columnspan=4, sticky=(N, S, E, W))
 
 Button_Craft(mainframe, "√", lambda: button_click("√"), 2, 0)
-Button_Craft(mainframe, "CE", Button_Erase_Entry, 2, 1)
-Button_Craft(mainframe, "C", Erase_All, 2, 2)
+Button_Craft(mainframe, "Ans", lambda: button_click ("Ans"), 2, 1)
+Button_EraseEntry = Button_Craft(mainframe, "CE", Erase_Entrys, 2, 2)
 Button_Craft(mainframe, "←", Button_Erase, 2, 3)
 
 dropdown_button = Menubutton(mainframe, text="Trig.", relief="flat", font=('Segoe UI', 18), bg="#131313", fg="#ffffff")
