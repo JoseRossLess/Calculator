@@ -103,6 +103,8 @@ def Calculate(expr):
                     del LisTokens [index:index + 2]
                     break
                 
+                
+                
         ##Operar sumas, restas, multiplicación, etc. 
 
         return LisTokens[0] if LisTokens else "0"
