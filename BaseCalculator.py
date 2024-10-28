@@ -2,7 +2,6 @@ from tkinter import *
 from tkinter import ttk
 import math
 import re
-from fractions import Fraction 
 
 DoneOp = False
 def button_click(value):
