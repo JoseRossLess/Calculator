@@ -195,10 +195,14 @@ def Press_Key(event):
     elif key == '\b':
         Button_Erase()
 
-def Button_Craft(parent, text, command, row, col, rowspan=1, colspan=1, bg="#131313", fg="white"):
-    button = Button(parent, text=text, borderwidth=0, highlightthickness=0, relief="flat", 
-                    command=command, padx=10, pady=10, width=6, height=1, font=('Segoe UI', 20), bg=bg, fg=fg)
-    button.grid(row=row, column=col, rowspan=rowspan, columnspan=colspan, sticky="nsew")
+def Button_Craft(parent, text, command, row, col, rowspan=1, 
+                 colspan=1, bg="#131313", fg="white"):
+    button = Button(parent, text=text, borderwidth=0, 
+                highlightthickness=0, relief="flat", 
+                command=command, padx=10, pady=10, 
+                width=6, height=1, font=('Segoe UI', 20), bg=bg, fg=fg)
+    button.grid(row=row, column=col, rowspan=rowspan, 
+                columnspan=colspan, sticky="nsew")
     
     # Evento para cambiar el color al pasar el cursor sobre el botón
     button.bind("<Enter>", lambda e: button.config(bg="#2a2828"))
@@ -241,10 +245,12 @@ for i in range(9):
 entry1 = StringVar(value="0")
 entry2 = StringVar()
 
-label_entry1 = Label(mainframe, textvariable=entry1, anchor='e', font=("Verdana", 24), bg="#000000", fg="#ffffff")
+label_entry1 = Label(mainframe, textvariable=entry1, anchor='e', 
+                     font=("Verdana", 24), bg="#000000", fg="#ffffff")
 label_entry1.grid(column=0, row=0, columnspan=4, sticky=(N, S, E, W))
 
-label_entry2 = Label(mainframe, textvariable=entry2, anchor='e', font=("Verdana", 32), bg="#000000", fg="#ffffff")
+label_entry2 = Label(mainframe, textvariable=entry2, anchor='e', 
+                     font=("Verdana", 32), bg="#000000", fg="#ffffff")
 label_entry2.grid(column=0, row=1, columnspan=4, sticky=(N, S, E, W))
 
 Button_Craft(mainframe, "√", lambda: button_click("√"), 2, 0)
