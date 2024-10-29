@@ -159,20 +159,25 @@ def Calculate(expr):
 
 def Equal():
     global Last_Result, Display_Result, DoneOp
-    
+
     current_text = entry1.get().strip()
-    
+
     try:
-        Result = Calculate(current_text)
-        Last_Result = float(Result)
+        Result = Calculate(current_text)  # Calcular el resultado
+        
+        # Verificar si el resultado es un número antes de intentar manipularlo
+        if isinstance(Result, str) and '.' in Result:
+            Result = Result.rstrip('0').rstrip('.')  # Eliminar ceros no significativos y el punto decimal si está vacío
+        
+        Last_Result = float(Result)  # Guardar el último resultado
         DoneOp = True
         Display_Result = True  # Marca que el último resultado está disponible
     except Exception as e:
-        Result = "Syntax Error"
+        Result = "Syntax Error"  # Manejo de errores
         Last_Result = None
         Display_Result = False
 
-    entry2.set(Result)
+    entry2.set(Result)  # Mostrar el resultado
 
 
 def Press_Key(event):
