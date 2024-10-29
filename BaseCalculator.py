@@ -23,8 +23,7 @@ def Button_Erase():
         "Ans": len("Ans"),
         "sin": len("sin"),
         "cos": len("cos"),
-        "tan": len("tan"),
-        "√": len("√")
+        "tan": len("tan")
     }
     for sequence, length in sequences.items():
         if current_text.endswith(sequence):
