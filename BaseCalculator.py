@@ -170,11 +170,11 @@ def Equal():
         
         Last_Result = float(Result)  # Guardar el último resultado
         DoneOp = True
-        Display_Result = True  # Marca que el último resultado está disponible
+
     except Exception as e:
         Result = "Syntax Error"  # Manejo de errores
         Last_Result = None
-        Display_Result = False
+
 
     entry2.set(Result)  # Mostrar el resultado
 
