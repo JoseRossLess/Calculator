@@ -157,7 +157,7 @@ def Calculate(expr):
     return Operation(Tokens)
 
 def Equal():
-    global Last_Result, Display_Result, DoneOp
+    global Last_Result, DoneOp
 
     current_text = entry1.get().strip()
 
