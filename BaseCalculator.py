@@ -7,10 +7,9 @@ import re
 DoneOp = False
 def button_click(value):
     global DoneOp
-    # Si se ha realizado una operación, borra entry1 antes de agregar un nuevo valor
     if DoneOp:
-        entry1.set(value)  # Empieza de nuevo con el nuevo número
-        DoneOp = False  # Reinicia la variable
+        entry1.set(value)  
+        DoneOp = False
     else:
         # Solo añade el valor al entry1
         if entry1.get() == "0":
@@ -35,7 +34,7 @@ def Button_Erase():
     new_text = current_text[:-1]
     entry1.set(new_text)
 
-Last_Result = None
+
 
 def subtract(tokens):
     index = 0
@@ -64,6 +63,7 @@ def subtract(tokens):
         else:
             index += 1
     return tokens
+
 
 def Calculate(expr):
 
@@ -164,21 +164,19 @@ def Calculate(expr):
 
     return Operation(Tokens)
 
+Last_Result = None
 def Equal():
     global Last_Result, Display_Result, DoneOp
-    
     current_text = entry1.get().strip()
-    
     try:
         Result = Calculate(current_text)
         Last_Result = float(Result)
         DoneOp = True
-        Display_Result = True  # Marca que el último resultado está disponible
+        Display_Result = True
     except Exception as e:
         Result = "Syntax Error"
         Last_Result = None
         Display_Result = False
-
     entry2.set(Result)
 
 
@@ -187,13 +185,14 @@ def Press_Key(event):
     if key.isdigit():
         button_click(key)
     elif key in ['+', '-', '*', '/']:
-        button_click(key.replace('*', 'x').replace('/', '÷'))  # Cambiar x y ÷ a * y /
+        button_click(key.replace('*', 'x').replace('/', '÷'))
     elif key == '.':
         button_click('.')
     elif key == '\r':
         Equal()
     elif key == '\b':
         Button_Erase()
+
 
 def Button_Craft(parent, text, command, row, col, rowspan=1, 
                  colspan=1, bg="#131313", fg="white"):
@@ -212,19 +211,19 @@ def Button_Craft(parent, text, command, row, col, rowspan=1,
     
     return button
 
-button_state = "CE"  # Corrige el nombre de la variable
+button_state = "CE"  
 
 def Erase_Entrys():
     global button_state
     if button_state == 'CE':
-        entry1.set("0")  # Borra solo entry1
-        button_state = "C"  # Actualiza el estado
-        Button_EraseEntry.config(text='C')  # Cambia el texto a 'C'
+        entry1.set("0")  
+        button_state = "C" 
+        Button_EraseEntry.config(text='C')  
     else:
-        entry1.set("0")  # Borra entry1
-        entry2.set("")    # Borra entry2
-        button_state = "CE"  # Actualiza el estado
-        Button_EraseEntry.config(text='CE')  # Cambia el texto a 'CE'
+        entry1.set("0") 
+        entry2.set("")  
+        button_state = "CE" 
+        Button_EraseEntry.config(text='CE')  
         
 root = Tk()
 root.configure(bg="#f7f4f4")
