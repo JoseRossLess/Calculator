@@ -103,13 +103,13 @@ def Calculate(expr):
                 del Tokens[index:index + 2]
                 break 
 
-    #Raiz Luisa
-    while '√' in Tokens: # Nombra a la funcion que corresponde en el listado 
+
+    while '√' in Tokens: 
         for idx, elemento in enumerate(Tokens): 
-            if elemento == '√': #Busca la funcion
+            if elemento == '√': 
                 siguiente_elemento = Tokens[idx + 1] 
                 razon = float(siguiente_elemento)
-                Tokens[idx:idx + 2] = [str(round(math.sqrt(razon), 9))] #Formula para realizar la raiz
+                Tokens[idx:idx + 2] = [str(round(math.sqrt(razon), 9))] 
 
 
     # Llamar a la función de operaciones generales
