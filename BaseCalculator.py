@@ -73,7 +73,16 @@ def Calculate(expr):
     expr = expr.replace('x', '*')
 
     expr = expr.replace('÷', '/')
-    Tokens = re.findall(r'[\d\.]+|[+*/-]|\^|cos|√|:', expr) 
+    Tokens = re.findall(r'[\d\.]+|[+*/%-]|\^|cos|√|:', expr) 
+
+    #porcentaje jorge
+    while '%' in Tokens:
+        for index, token in enumerate(Tokens):
+            if token == '%':
+                if index > 0:  # Asegurarse de que hay un número antes del símbolo %
+                    numero = float(Tokens[index - 1])
+                    Tokens[index - 1:index + 1] = [str(numero / 100)]
+
 
     # fraccion Edin 
     while ':' in Tokens: # Si encuentra :
@@ -144,7 +153,6 @@ def Calculate(expr):
                         del LisTokens[i:i + 2]
                         break
 
-                
 
 
         LisTokens = subtract(LisTokens)
