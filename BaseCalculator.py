@@ -73,7 +73,7 @@ def Calculate(expr):
     expr = expr.replace('x', '*')
 
     expr = expr.replace('÷', '/')
-    Tokens = re.findall(r'[\d\.]+|[+*/%-]|\^|cos|√|:', expr) 
+    Tokens = re.findall(r'[\d\.]+|[+*/%-]|\^|cos|√|:|sin', expr) 
 
     #porcentaje jorge
     while '%' in Tokens:
@@ -130,6 +130,17 @@ def Calculate(expr):
                 razon = float(siguiente_elemento)
                 Tokens[idx:idx + 2] = [str(round(math.sqrt(razon), 9))] #Formula para realizar la raiz
 
+    # seno Abner                  
+    while 'sin' in Tokens:  # Verificar si es seleccionado el seno
+        for index, token in enumerate(Tokens):
+            if index + 1 < len(Tokens):  # Verifica que haya un token después de 'sin'
+                siguiente_token = Tokens[index + 1]
+            if siguiente_token == '-' and index + 2 < len(Tokens):  # verificar si es negativo
+                argumento = float(Tokens[index + 2]) * -1  
+                Tokens[index:index + 3] = [str(round(math.sin(math.radians(argumento)), 9))]  # Calcula el seno
+            else:  # Si no es negativo
+                argumento = float(siguiente_token)  # Opera normalmente
+                Tokens[index:index + 2] = [str(round(math.sin(math.radians(argumento)), 9))]  # Calcula el seno
 
     # Llamar a la función de operaciones generales
 
