@@ -4,6 +4,7 @@ import math
 import re
 from fractions import Fraction 
 
+
 DoneOp = False
 def button_click(value):
     global DoneOp
@@ -226,12 +227,15 @@ def Erase_Entrys():
         entry2.set("")    # Borra entry2
         button_state = "CE"  # Actualiza el estado
         Button_EraseEntry.config(text='CE')  # Cambia el texto a 'CE'
+
+
         
 root = Tk()
 root.configure(bg="#f7f4f4")
 root.title("Calculadora")
 root.geometry("+800+200")
-root.iconbitmap("calculadora.ico")
+
+
 
 mainframe = Frame(root, bg="#111111")
 mainframe.grid(column=0, row=0, sticky=(N, S, E, W))
@@ -246,7 +250,7 @@ for i in range(9):
 
 entry1 = StringVar(value="0")
 entry2 = StringVar()
-
+# Region
 label_entry1 = Label(mainframe, textvariable=entry1, anchor='e', font=("Verdana", 24), bg="#000000", fg="#ffffff")
 label_entry1.grid(column=0, row=0, columnspan=4, sticky=(N, S, E, W))
 
@@ -298,7 +302,7 @@ Button_Craft(mainframe, "0", lambda: button_click("0"), 7, 1)
 Button_Craft(mainframe, ".", lambda: button_click("."), 7, 2)
 Button_Craft(mainframe, "=", Equal, 7, 3)
 
-
+root.iconbitmap("calculadora.ico")
 root.bind("<Key>", Press_Key)
 
 root.mainloop()
