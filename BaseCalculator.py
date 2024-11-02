@@ -231,6 +231,7 @@ root = Tk()
 root.configure(bg="#f7f4f4")
 root.title("Calculadora")
 root.geometry("+800+200")
+root.iconbitmap("calculadora.ico")
 
 mainframe = Frame(root, bg="#111111")
 mainframe.grid(column=0, row=0, sticky=(N, S, E, W))
